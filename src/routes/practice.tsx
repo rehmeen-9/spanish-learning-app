@@ -5,9 +5,9 @@ import { LEVELS, WORDS, type Word } from "@/lib/hoplingo-data";
 import { recordAnswer, useDueWords, useAppState } from "@/lib/hoplingo-store";
 
 export const Route = createFileRoute("/practice")({
-  validateSearch: (s: Record<string, unknown>) => ({
+  validateSearch: (s: Record<string, unknown>): { level: number; category?: string } => ({
     level: typeof s.level === "number" ? s.level : Number(s.level) || 1,
-    category: typeof s.category === "string" ? s.category : undefined,
+    ...(typeof s.category === "string" ? { category: s.category } : {}),
   }),
   head: () => ({
     meta: [
