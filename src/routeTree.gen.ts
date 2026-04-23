@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WordsRouteImport } from './routes/words'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as LevelsRouteImport } from './routes/levels'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 
+const WordsRoute = WordsRouteImport.update({
+  id: '/words',
+  path: '/words',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProgressRoute = ProgressRouteImport.update({
   id: '/progress',
   path: '/progress',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/levels': typeof LevelsRoute
   '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
+  '/words': typeof WordsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/levels': typeof LevelsRoute
   '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
+  '/words': typeof WordsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,27 @@ export interface FileRoutesById {
   '/levels': typeof LevelsRoute
   '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
+  '/words': typeof WordsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/levels' | '/practice' | '/progress'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/levels'
+    | '/practice'
+    | '/progress'
+    | '/words'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/levels' | '/practice' | '/progress'
-  id: '__root__' | '/' | '/dashboard' | '/levels' | '/practice' | '/progress'
+  to: '/' | '/dashboard' | '/levels' | '/practice' | '/progress' | '/words'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/levels'
+    | '/practice'
+    | '/progress'
+    | '/words'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,10 +99,18 @@ export interface RootRouteChildren {
   LevelsRoute: typeof LevelsRoute
   PracticeRoute: typeof PracticeRoute
   ProgressRoute: typeof ProgressRoute
+  WordsRoute: typeof WordsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/words': {
+      id: '/words'
+      path: '/words'
+      fullPath: '/words'
+      preLoaderRoute: typeof WordsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/progress': {
       id: '/progress'
       path: '/progress'
@@ -125,6 +155,7 @@ const rootRouteChildren: RootRouteChildren = {
   LevelsRoute: LevelsRoute,
   PracticeRoute: PracticeRoute,
   ProgressRoute: ProgressRoute,
+  WordsRoute: WordsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

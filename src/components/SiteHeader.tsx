@@ -5,7 +5,7 @@ import { useAppState } from "@/lib/hoplingo-store";
 const links = [
   { to: "/", label: "Home" },
   { to: "/levels", label: "Levels" },
-  { to: "/practice", label: "Practice" },
+  { to: "/words", label: "Word Bank" },
   { to: "/dashboard", label: "Dashboard" },
   { to: "/progress", label: "Progress" },
 ] as const;
