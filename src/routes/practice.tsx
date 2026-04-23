@@ -5,8 +5,9 @@ import { LEVELS, WORDS, type Word } from "@/lib/hoplingo-data";
 import { recordAnswer, useDueWords, useAppState } from "@/lib/hoplingo-store";
 
 export const Route = createFileRoute("/practice")({
-  validateSearch: (s: Record<string, unknown>) => ({
+  validateSearch: (s: Record<string, unknown>): { level: number; category?: string } => ({
     level: typeof s.level === "number" ? s.level : Number(s.level) || 1,
+    ...(typeof s.category === "string" ? { category: s.category } : {}),
   }),
   head: () => ({
     meta: [
@@ -56,10 +57,13 @@ function buildQuestion(word: Word, pool: Word[]): Q {
 }
 
 function Practice() {
-  const { level } = Route.useSearch();
+  const { level, category } = Route.useSearch();
   const lvl = LEVELS.find((l) => l.id === level) ?? LEVELS[0];
-  const due = useDueWords(lvl.categories, 12);
-  const pool = useMemo(() => WORDS.filter((w) => lvl.categories.includes(w.category)), [lvl]);
+  const activeCats = category && lvl.categories.includes(category as never)
+    ? [category as (typeof lvl.categories)[number]]
+    : lvl.categories;
+  const due = useDueWords(activeCats, 12);
+  const pool = useMemo(() => WORDS.filter((w) => activeCats.includes(w.category)), [activeCats]);
   const s = useAppState();
 
   const [idx, setIdx] = useState(0);
