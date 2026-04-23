@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CATEGORIES, WORDS, type Category, type Word } from "@/lib/hoplingo-data";
+import { CATEGORIES, WORDS, masteryScore, type Category, type Word } from "@/lib/hoplingo-data";
 import { useAppState, recordAnswer } from "@/lib/hoplingo-store";
 
 
@@ -39,7 +39,7 @@ function buildMCQ(word: Word, pool: Word[]): { options: Word[]; correctIdx: numb
 }
 
 function WordBank() {
-  const stats = useStats();
+  const stats = useAppState().stats;
   const [filter, setFilter] = useState<Category | "all">("all");
   const [direction, setDirection] = useState<"es-en" | "en-es">("es-en");
   const [showAnswers, setShowAnswers] = useState(true);
