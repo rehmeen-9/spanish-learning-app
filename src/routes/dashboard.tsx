@@ -41,6 +41,7 @@ function Dashboard() {
         </div>
         <Link
           to="/practice"
+          search={{ level: 1 }}
           className="rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground shadow-pop hover:scale-105 transition"
         >
           Continue practice →

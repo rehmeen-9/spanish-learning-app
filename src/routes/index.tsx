@@ -57,6 +57,7 @@ function Index() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/practice"
+                search={{ level: 1 }}
                 className="group inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 font-semibold text-accent-foreground shadow-pop transition-all hover:scale-105 hover:shadow-pop"
               >
                 Start practicing
@@ -165,6 +166,7 @@ function Index() {
             </p>
             <Link
               to="/practice"
+              search={{ level: 1 }}
               className="mt-6 inline-flex rounded-full bg-card px-7 py-3.5 font-semibold text-foreground shadow-pop transition hover:scale-105"
             >
               Start a level →
