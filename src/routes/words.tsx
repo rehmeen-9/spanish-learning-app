@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CATEGORIES, WORDS, type Category, type Word } from "@/lib/hoplingo-data";
-import { useStats, recordAnswer } from "@/lib/hoplingo-store";
-import { masteryScore } from "@/lib/hoplingo-data";
+import { useAppState, recordAnswer } from "@/lib/hoplingo-store";
+
 
 export const Route = createFileRoute("/words")({
   head: () => ({
