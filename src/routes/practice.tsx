@@ -57,10 +57,13 @@ function buildQuestion(word: Word, pool: Word[]): Q {
 }
 
 function Practice() {
-  const { level } = Route.useSearch();
+  const { level, category } = Route.useSearch();
   const lvl = LEVELS.find((l) => l.id === level) ?? LEVELS[0];
-  const due = useDueWords(lvl.categories, 12);
-  const pool = useMemo(() => WORDS.filter((w) => lvl.categories.includes(w.category)), [lvl]);
+  const activeCats = category && lvl.categories.includes(category as never)
+    ? [category as (typeof lvl.categories)[number]]
+    : lvl.categories;
+  const due = useDueWords(activeCats, 12);
+  const pool = useMemo(() => WORDS.filter((w) => activeCats.includes(w.category)), [activeCats]);
   const s = useAppState();
 
   const [idx, setIdx] = useState(0);

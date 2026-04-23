@@ -1,13 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import { LEVELS, WORDS } from "@/lib/hoplingo-data";
-import { useAppState, getCategoryMastery } from "@/lib/hoplingo-store";
+import { Lock, CheckCircle2 } from "lucide-react";
+import { LEVELS, WORDS, CATEGORIES } from "@/lib/hoplingo-data";
+import {
+  useAppState,
+  getLevelProgress,
+  isLevelUnlocked,
+  isCategoryUnlocked,
+  LEVEL_UNLOCK_THRESHOLD,
+} from "@/lib/hoplingo-store";
 
 export const Route = createFileRoute("/levels")({
   head: () => ({
     meta: [
       { title: "Levels — HopLingo" },
-      { name: "description", content: "Hop through 6 levels from Sprout to Maestro. Each level focuses on themed Spanish vocabulary." },
+      { name: "description", content: "Hop through 6 levels with category groups. Master each group to unlock the next." },
       { property: "og:title", content: "HopLingo Levels" },
       { property: "og:description", content: "Sprout, Hopper, Explorer, Wanderer, Linguist, Maestro." },
     ],
@@ -17,52 +24,153 @@ export const Route = createFileRoute("/levels")({
 
 function LevelsPage() {
   const s = useAppState();
-  const mastery = getCategoryMastery(s);
   return (
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
       <div className="mb-10">
         <h1 className="text-4xl font-bold md:text-5xl">Levels</h1>
-        <p className="mt-2 text-muted-foreground">Six themed levels. Hop your way from Sprout to Maestro.</p>
+        <p className="mt-2 text-muted-foreground">
+          Each level has category groups. Reach {LEVEL_UNLOCK_THRESHOLD}% mastery on a group to unlock the next one.
+        </p>
       </div>
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+
+      <div className="space-y-6">
         {LEVELS.map((lvl, i) => {
+          const unlocked = isLevelUnlocked(s, lvl.id);
+          const prog = getLevelProgress(s, lvl.id);
           const wordsInLvl = WORDS.filter((w) => lvl.categories.includes(w.category));
-          const avg = lvl.categories.reduce((a, c) => a + (mastery[c]?.avg ?? 0), 0) / lvl.categories.length;
+
           return (
-            <motion.div
+            <motion.section
               key={lvl.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.07 }}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-gradient-card p-6 shadow-soft transition-all hover:-translate-y-1 hover:shadow-mint"
+              transition={{ delay: i * 0.05 }}
+              className={`rounded-3xl border border-border bg-gradient-card p-6 shadow-soft md:p-8 ${
+                unlocked ? "" : "opacity-70"
+              }`}
             >
-              <div className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/15 text-xl font-bold text-primary">
-                {lvl.id}
-              </div>
-              <h3 className="text-2xl font-bold">{lvl.name}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {wordsInLvl.length} words · {lvl.categories.join(", ")}
-              </p>
-              <div className="mt-5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground">Mastery</span>
-                  <span className="font-semibold">{Math.round(avg)}%</span>
+              {/* Level header */}
+              <div className="flex flex-wrap items-center gap-4">
+                <div
+                  className={`flex h-14 w-14 items-center justify-center rounded-2xl text-xl font-bold ${
+                    unlocked
+                      ? "bg-primary/15 text-primary"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {unlocked ? lvl.id : <Lock className="h-5 w-5" />}
                 </div>
-                <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-muted">
-                  <div
-                    className="h-full rounded-full bg-gradient-mint transition-all duration-700"
-                    style={{ width: `${avg}%` }}
-                  />
+                <div className="flex-1 min-w-[200px]">
+                  <h2 className="text-2xl font-bold md:text-3xl">
+                    Level {lvl.id} · {lvl.name}
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    {wordsInLvl.length} words · {lvl.categories.length} group
+                    {lvl.categories.length === 1 ? "" : "s"}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">
+                    Mastery
+                  </div>
+                  <div className="text-2xl font-bold">{prog.avg}%</div>
                 </div>
               </div>
-              <Link
-                to="/practice"
-                search={{ level: lvl.id }}
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary py-2.5 font-semibold text-primary-foreground shadow-mint transition hover:scale-[1.02]"
-              >
-                Practice this level →
-              </Link>
-            </motion.div>
+
+              {/* Mastery bar */}
+              <div className="mt-4 h-2 overflow-hidden rounded-full bg-muted">
+                <div
+                  className="h-full rounded-full bg-gradient-mint transition-all duration-700"
+                  style={{ width: `${prog.avg}%` }}
+                />
+              </div>
+
+              {!unlocked && (
+                <p className="mt-4 rounded-2xl bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
+                  🔒 Reach {LEVEL_UNLOCK_THRESHOLD}% mastery on Level {lvl.id - 1} to unlock.
+                </p>
+              )}
+
+              {/* Category groups */}
+              {unlocked && (
+                <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {prog.perCategory.map((c, ci) => {
+                    const meta = CATEGORIES.find((x) => x.key === c.category);
+                    const catUnlocked = isCategoryUnlocked(s, lvl.id, c.category);
+                    const completed = c.avg >= LEVEL_UNLOCK_THRESHOLD;
+                    return (
+                      <div
+                        key={c.category}
+                        className={`group relative rounded-2xl border-2 p-4 transition-all ${
+                          completed
+                            ? "border-primary/50 bg-primary/5"
+                            : catUnlocked
+                              ? "border-border bg-card hover:-translate-y-0.5 hover:border-primary hover:shadow-mint"
+                              : "border-dashed border-border bg-muted/30"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <div className="text-2xl">{meta?.emoji}</div>
+                            <h3 className="mt-1 font-bold capitalize">
+                              {meta?.label ?? c.category}
+                            </h3>
+                            <p className="text-xs text-muted-foreground">
+                              {c.mastered}/{c.total} mastered
+                            </p>
+                          </div>
+                          {completed ? (
+                            <CheckCircle2 className="h-5 w-5 text-primary" />
+                          ) : !catUnlocked ? (
+                            <Lock className="h-4 w-4 text-muted-foreground" />
+                          ) : (
+                            <span className="text-xs font-bold text-muted-foreground">
+                              {ci + 1}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-muted">
+                          <div
+                            className={`h-full rounded-full transition-all duration-500 ${
+                              completed ? "bg-primary" : "bg-gradient-mint"
+                            }`}
+                            style={{ width: `${c.avg}%` }}
+                          />
+                        </div>
+
+                        {catUnlocked ? (
+                          <Link
+                            to="/practice"
+                            search={{ level: lvl.id, category: c.category }}
+                            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-primary py-2 text-sm font-semibold text-primary-foreground shadow-mint transition hover:scale-[1.02]"
+                          >
+                            {completed ? "Review" : "Practice"} →
+                          </Link>
+                        ) : (
+                          <div className="mt-3 rounded-full bg-muted py-2 text-center text-xs text-muted-foreground">
+                            Finish previous group to unlock
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Practice all */}
+              {unlocked && lvl.categories.length > 1 && (
+                <div className="mt-5 flex justify-end">
+                  <Link
+                    to="/practice"
+                    search={{ level: lvl.id }}
+                    className="rounded-full bg-card px-5 py-2 text-sm font-semibold shadow-soft transition hover:-translate-y-0.5"
+                  >
+                    Mixed practice (all groups) →
+                  </Link>
+                </div>
+              )}
+            </motion.section>
           );
         })}
       </div>
