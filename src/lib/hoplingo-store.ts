@@ -175,6 +175,52 @@ export function useDueWords(categories?: Category[], limit = 10) {
   return scored.slice(0, limit).map((x) => x.word);
 }
 
+import { LEVELS } from "./hoplingo-data";
+
+// A level is unlocked when the previous level's average mastery >= threshold.
+const UNLOCK_THRESHOLD = 70;
+
+export function getLevelProgress(s: AppState, levelId: number) {
+  const lvl = LEVELS.find((l) => l.id === levelId);
+  if (!lvl) return { avg: 0, perCategory: [] as { category: Category; avg: number; mastered: number; total: number }[] };
+  const perCategory = lvl.categories.map((c) => {
+    const wordsIn = WORDS.filter((w) => w.category === c);
+    const total = wordsIn.length;
+    let sum = 0;
+    let mastered = 0;
+    wordsIn.forEach((w) => {
+      const m = masteryScore(s.stats[w.id]);
+      sum += m;
+      if (m >= UNLOCK_THRESHOLD) mastered += 1;
+    });
+    return { category: c, avg: total ? Math.round(sum / total) : 0, mastered, total };
+  });
+  const avg = perCategory.reduce((a, c) => a + c.avg, 0) / Math.max(perCategory.length, 1);
+  return { avg: Math.round(avg), perCategory };
+}
+
+export function isLevelUnlocked(s: AppState, levelId: number): boolean {
+  if (levelId <= 1) return true;
+  const prev = getLevelProgress(s, levelId - 1);
+  return prev.avg >= UNLOCK_THRESHOLD;
+}
+
+export function isCategoryUnlocked(s: AppState, levelId: number, category: Category): boolean {
+  if (!isLevelUnlocked(s, levelId)) return false;
+  const lvl = LEVELS.find((l) => l.id === levelId);
+  if (!lvl) return false;
+  const idx = lvl.categories.indexOf(category);
+  if (idx <= 0) return true;
+  // Sequential: unlock category once previous category in same level is mastered
+  const prevCat = lvl.categories[idx - 1];
+  const wordsIn = WORDS.filter((w) => w.category === prevCat);
+  if (wordsIn.length === 0) return true;
+  const avg = wordsIn.reduce((a, w) => a + masteryScore(s.stats[w.id]), 0) / wordsIn.length;
+  return avg >= UNLOCK_THRESHOLD;
+}
+
+export const LEVEL_UNLOCK_THRESHOLD = UNLOCK_THRESHOLD;
+
 export function getCategoryMastery(s: AppState) {
   const byCat: Record<Category, { total: number; learned: number; avg: number }> = {} as never;
   WORDS.forEach((w) => {
