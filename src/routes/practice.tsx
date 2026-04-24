@@ -31,9 +31,7 @@ interface Q {
   promptLang: "es" | "en";
 }
 
-function buildQuestion(word: Word, pool: Word[]): Q {
-  const modes: Mode[] = ["mc", "type", "es-en", "en-es"];
-  const mode = modes[Math.floor(Math.random() * modes.length)];
+function buildQuestion(word: Word, pool: Word[], mode: Mode): Q {
   const promptLang: "es" | "en" = Math.random() > 0.5 ? "es" : "en";
   if (mode === "mc") {
     const distractors = pool.filter((w) => w.id !== word.id).sort(() => Math.random() - 0.5).slice(0, 3);
