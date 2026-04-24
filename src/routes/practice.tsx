@@ -84,6 +84,15 @@ function Practice() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [due.length, pool.length]);
 
+  // Stop any in-flight speech when leaving the page or moving to next question
+  useEffect(() => {
+    return () => stopSpeaking();
+  }, []);
+
+  useEffect(() => {
+    stopSpeaking();
+  }, [idx]);
+
   const q = questions[idx];
 
   function submit(answer: string) {
