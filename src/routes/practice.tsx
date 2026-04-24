@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LEVELS, WORDS, type Word } from "@/lib/hoplingo-data";
 import { recordAnswer, useDueWords, useAppState } from "@/lib/hoplingo-store";
 import { SpeakButton } from "@/components/SpeakButton";
+import { stopSpeaking } from "@/lib/speak";
 
 export const Route = createFileRoute("/practice")({
   validateSearch: (s: Record<string, unknown>): { level: number; category?: string } => ({
@@ -82,6 +83,15 @@ function Practice() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [due.length, pool.length]);
+
+  // Stop any in-flight speech when leaving the page or moving to next question
+  useEffect(() => {
+    return () => stopSpeaking();
+  }, []);
+
+  useEffect(() => {
+    stopSpeaking();
+  }, [idx]);
 
   const q = questions[idx];
 
