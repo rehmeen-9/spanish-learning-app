@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CATEGORIES, WORDS, masteryScore, type Category, type Word } from "@/lib/hoplingo-data";
 import { useAppState, recordAnswer } from "@/lib/hoplingo-store";
+import { SpeakButton } from "@/components/SpeakButton";
 
 
 export const Route = createFileRoute("/words")({
@@ -170,7 +171,10 @@ function WordBank() {
                     <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                       {CATEGORIES.find((c) => c.key === w.category)?.emoji} {w.category}
                     </p>
-                    <h3 className="mt-1 text-3xl font-bold tracking-tight">{prompt}</h3>
+                    <div className="mt-1 flex items-center gap-2">
+                      <h3 className="text-3xl font-bold tracking-tight">{prompt}</h3>
+                      <SpeakButton text={w.es} size="sm" label={`Listen to ${w.es}`} />
+                    </div>
                     {showAnswers && (
                       <p className="mt-1 text-sm text-primary">
                         = <span className="font-semibold">{answer}</span>
@@ -205,17 +209,19 @@ function WordBank() {
                         else cls = "border-border bg-muted text-muted-foreground";
                       }
                       return (
-                        <button
-                          key={opt.id}
-                          disabled={answered}
-                          onClick={() => handlePick(i)}
-                          className={`rounded-xl border-2 px-3 py-2 text-left text-sm font-semibold transition-all ${cls}`}
-                        >
-                          <span className="mr-1 text-xs opacity-60">{String.fromCharCode(65 + i)}.</span>
-                          {text}
-                          {answered && isCorrect && <span className="ml-1">✓</span>}
-                          {answered && isPicked && !isCorrect && <span className="ml-1">✗</span>}
-                        </button>
+                        <div key={opt.id} className="flex items-center gap-1.5">
+                          <button
+                            disabled={answered}
+                            onClick={() => handlePick(i)}
+                            className={`flex-1 rounded-xl border-2 px-3 py-2 text-left text-sm font-semibold transition-all ${cls}`}
+                          >
+                            <span className="mr-1 text-xs opacity-60">{String.fromCharCode(65 + i)}.</span>
+                            {text}
+                            {answered && isCorrect && <span className="ml-1">✓</span>}
+                            {answered && isPicked && !isCorrect && <span className="ml-1">✗</span>}
+                          </button>
+                          {direction === "en-es" && <SpeakButton text={opt.es} size="sm" />}
+                        </div>
                       );
                     })}
                   </div>
