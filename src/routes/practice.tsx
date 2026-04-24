@@ -31,9 +31,7 @@ interface Q {
   promptLang: "es" | "en";
 }
 
-function buildQuestion(word: Word, pool: Word[]): Q {
-  const modes: Mode[] = ["mc", "type", "es-en", "en-es"];
-  const mode = modes[Math.floor(Math.random() * modes.length)];
+function buildQuestion(word: Word, pool: Word[], mode: Mode): Q {
   const promptLang: "es" | "en" = Math.random() > 0.5 ? "es" : "en";
   if (mode === "mc") {
     const distractors = pool.filter((w) => w.id !== word.id).sort(() => Math.random() - 0.5).slice(0, 3);
@@ -76,7 +74,10 @@ function Practice() {
 
   useEffect(() => {
     if (questions.length === 0 && due.length > 0) {
-      setQuestions(due.map((w) => buildQuestion(w, pool)));
+      // Teach MCQs first, then fill-in-the-blank (typing) questions
+      const mcQs = due.map((w) => buildQuestion(w, pool, "mc"));
+      const typeQs = due.map((w) => buildQuestion(w, pool, "type"));
+      setQuestions([...mcQs, ...typeQs]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [due.length, pool.length]);
