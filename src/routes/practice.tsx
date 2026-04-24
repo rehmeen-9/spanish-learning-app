@@ -86,15 +86,6 @@ function Practice() {
 
   const q = questions[idx];
 
-  // Auto-play Spanish prompts as the question changes
-  useEffect(() => {
-    if (!q || feedback) return;
-    if (q.promptLang === "es") {
-      const t = setTimeout(() => speakSpanish(q.prompt), 200);
-      return () => clearTimeout(t);
-    }
-  }, [idx, q, feedback]);
-
   function submit(answer: string) {
     if (!q || feedback) return;
     const correct = answer.trim().toLowerCase() === q.answer.toLowerCase();
@@ -102,8 +93,6 @@ function Practice() {
     recordAnswer(q.word.id, correct, q.mode, ms);
     setFeedback({ correct, answer: q.answer });
     setScore((sc) => ({ correct: sc.correct + (correct ? 1 : 0), total: sc.total + 1 }));
-    // Always voice the Spanish word after answering for reinforcement
-    setTimeout(() => speakSpanish(q.word.es), 250);
   }
 
   function next() {
