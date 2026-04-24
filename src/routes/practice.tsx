@@ -3,6 +3,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LEVELS, WORDS, type Word } from "@/lib/hoplingo-data";
 import { recordAnswer, useDueWords, useAppState } from "@/lib/hoplingo-store";
+import { SpeakButton } from "@/components/SpeakButton";
+import { speakSpanish } from "@/lib/speak";
 
 export const Route = createFileRoute("/practice")({
   validateSearch: (s: Record<string, unknown>): { level: number; category?: string } => ({
@@ -84,6 +86,15 @@ function Practice() {
 
   const q = questions[idx];
 
+  // Auto-play Spanish prompts as the question changes
+  useEffect(() => {
+    if (!q || feedback) return;
+    if (q.promptLang === "es") {
+      const t = setTimeout(() => speakSpanish(q.prompt), 200);
+      return () => clearTimeout(t);
+    }
+  }, [idx, q, feedback]);
+
   function submit(answer: string) {
     if (!q || feedback) return;
     const correct = answer.trim().toLowerCase() === q.answer.toLowerCase();
@@ -91,6 +102,8 @@ function Practice() {
     recordAnswer(q.word.id, correct, q.mode, ms);
     setFeedback({ correct, answer: q.answer });
     setScore((sc) => ({ correct: sc.correct + (correct ? 1 : 0), total: sc.total + 1 }));
+    // Always voice the Spanish word after answering for reinforcement
+    setTimeout(() => speakSpanish(q.word.es), 250);
   }
 
   function next() {
@@ -194,7 +207,10 @@ function Practice() {
           </div>
           <div className="mt-6 text-center">
             <p className="text-sm uppercase tracking-wider text-muted-foreground">Translate</p>
-            <p className="mt-3 text-5xl font-bold tracking-tight md:text-6xl">{q.prompt}</p>
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <p className="text-5xl font-bold tracking-tight md:text-6xl">{q.prompt}</p>
+              {q.promptLang === "es" && <SpeakButton text={q.prompt} size="lg" />}
+            </div>
           </div>
 
           {q.mode === "mc" && q.options ? (
@@ -204,20 +220,22 @@ function Practice() {
                 const isCorrect = opt.id === q.word.id;
                 const showColor = feedback ? (isCorrect ? "correct" : "neutral") : "idle";
                 return (
-                  <button
-                    key={opt.id}
-                    disabled={!!feedback}
-                    onClick={() => submit(text)}
-                    className={`rounded-2xl border-2 p-4 text-left font-semibold transition-all ${
-                      showColor === "correct"
-                        ? "border-primary bg-primary/15 text-primary"
-                        : showColor === "neutral"
-                          ? "border-border bg-muted text-muted-foreground"
-                          : "border-border bg-card hover:-translate-y-0.5 hover:border-primary hover:shadow-mint"
-                    }`}
-                  >
-                    {text}
-                  </button>
+                  <div key={opt.id} className="flex items-center gap-2">
+                    <button
+                      disabled={!!feedback}
+                      onClick={() => submit(text)}
+                      className={`flex-1 rounded-2xl border-2 p-4 text-left font-semibold transition-all ${
+                        showColor === "correct"
+                          ? "border-primary bg-primary/15 text-primary"
+                          : showColor === "neutral"
+                            ? "border-border bg-muted text-muted-foreground"
+                            : "border-border bg-card hover:-translate-y-0.5 hover:border-primary hover:shadow-mint"
+                      }`}
+                    >
+                      {text}
+                    </button>
+                    {q.promptLang === "en" && <SpeakButton text={opt.es} size="sm" />}
+                  </div>
                 );
               })}
             </div>
