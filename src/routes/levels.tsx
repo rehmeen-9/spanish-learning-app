@@ -13,10 +13,10 @@ import {
 export const Route = createFileRoute("/levels")({
   head: () => ({
     meta: [
-      { title: "Levels — HopLingo" },
-      { name: "description", content: "Hop through 6 levels with category groups. Master each group to unlock the next." },
-      { property: "og:title", content: "HopLingo Levels" },
-      { property: "og:description", content: "Sprout, Hopper, Explorer, Wanderer, Linguist, Maestro." },
+      { title: "Niveles — Chispa" },
+      { name: "description", content: "Avanza por 6 niveles con grupos de categorías. Domina cada grupo para desbloquear el siguiente." },
+      { property: "og:title", content: "Niveles de Chispa" },
+      { property: "og:description", content: "Brote, Chispa, Explorador, Viajero, Lingüista, Maestro." },
     ],
   }),
   component: LevelsPage,

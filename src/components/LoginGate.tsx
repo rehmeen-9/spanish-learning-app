@@ -35,7 +35,7 @@ export function LoginGate() {
         </div>
 
         <label className="mt-6 block text-sm font-medium" htmlFor="username">
-          Username
+          Nombre de usuario
         </label>
         <input
           id="username"
@@ -47,7 +47,7 @@ export function LoginGate() {
             setName(e.target.value);
             setHint(null);
           }}
-          placeholder="e.g. hopper_fan"
+          placeholder="ej. amigo_loro"
           className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-base outline-none ring-primary/30 transition focus:ring-4"
         />
 
@@ -56,9 +56,9 @@ export function LoginGate() {
             <span className="text-destructive">{hint}</span>
           ) : trimmed ? (
             exists ? (
-              <span className="text-primary">👋 Welcome back — we'll resume your progress.</span>
+              <span className="text-primary">👋 ¡Bienvenido de vuelta! Continuamos tu progreso.</span>
             ) : (
-              <span className="text-muted-foreground">✨ New username — we'll start a fresh journey.</span>
+              <span className="text-muted-foreground">✨ Usuario nuevo — empezamos una aventura desde cero.</span>
             )
           ) : null}
         </div>
@@ -67,11 +67,11 @@ export function LoginGate() {
           type="submit"
           className="mt-4 w-full rounded-full bg-primary py-3 text-base font-semibold text-primary-foreground shadow-mint transition hover:scale-[1.02] active:scale-100"
         >
-          {exists ? "Continue" : "Start learning"}
+          {exists ? "Continuar" : "Empezar a aprender"}
         </button>
 
         <p className="mt-4 text-center text-[11px] text-muted-foreground">
-          Usernames are case-insensitive and stored only in your browser.
+          Los nombres no distinguen mayúsculas y se guardan solo en este navegador.
         </p>
       </form>
     </div>
