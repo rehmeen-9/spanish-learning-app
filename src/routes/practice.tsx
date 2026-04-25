@@ -95,9 +95,29 @@ function Practice() {
 
   const q = questions[idx];
 
+  function normalize(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // strip accents (á→a, ñ→n)
+      .replace(/[¿?¡!.,;:"'`()]/g, "") // strip punctuation
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/^(the|a|an|to|el|la|los|las|un|una|unos|unas)\s+/i, "");
+  }
+
+  function isAnswerCorrect(user: string, expected: string): boolean {
+    const u = normalize(user);
+    const e = normalize(expected);
+    if (!u) return false;
+    // Accept multiple acceptable answers separated by "/" or "," in the data
+    const variants = e.split(/\s*[/,]\s*/).filter(Boolean);
+    return variants.includes(u) || u === e;
+  }
+
   function submit(answer: string) {
     if (!q || feedback) return;
-    const correct = answer.trim().toLowerCase() === q.answer.toLowerCase();
+    const correct = isAnswerCorrect(answer, q.answer);
     const ms = Date.now() - startRef.current;
     recordAnswer(q.word.id, correct, q.mode, ms);
     setFeedback({ correct, answer: q.answer });
