@@ -191,7 +191,7 @@ export const WORDS: Word[] = [
 
 export const LEVELS = [
   { id: 1, name: "Sprout", goal: 5, categories: ["greetings"] as Category[] },
-  { id: 2, name: "Hopper", goal: 8, categories: ["greetings", "numbers"] as Category[] },
+  { id: 2, name: "Chispa", goal: 8, categories: ["greetings", "numbers"] as Category[] },
   { id: 3, name: "Explorer", goal: 10, categories: ["food", "colors"] as Category[] },
   { id: 4, name: "Wanderer", goal: 12, categories: ["travel", "time"] as Category[] },
   { id: 5, name: "Linguist", goal: 15, categories: ["verbs", "family"] as Category[] },
