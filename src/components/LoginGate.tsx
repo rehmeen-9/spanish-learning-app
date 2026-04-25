@@ -25,12 +25,12 @@ export function LoginGate() {
         className="w-full max-w-md rounded-3xl border border-border/60 bg-card/90 p-8 shadow-xl backdrop-blur-xl"
       >
         <div className="flex flex-col items-center text-center">
-          <img src={hopper} alt="" width={72} height={72} className="h-18 w-18 animate-wiggle" />
+          <img src={mascot} alt="" width={72} height={72} className="h-18 w-18 animate-wiggle" />
           <h1 className="mt-3 text-3xl font-bold tracking-tight">
-            Welcome to Hop<span className="text-gradient-berry">Lingo</span>
+            Bienvenido a Chis<span className="text-gradient-berry">pa</span>
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Enter a username to start learning. Your progress is saved per username on this device.
+            Escribe un nombre de usuario para comenzar. Tu progreso se guarda por usuario en este dispositivo.
           </p>
         </div>
 
