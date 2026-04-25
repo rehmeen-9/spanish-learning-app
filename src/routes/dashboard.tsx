@@ -15,10 +15,10 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip, CartesianGrid } fro
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — HopLingo" },
-      { name: "description", content: "Your daily streak, mastery breakdown, achievements and learning velocity at a glance." },
-      { property: "og:title", content: "HopLingo Dashboard" },
-      { property: "og:description", content: "Streaks, mastery, and milestones." },
+      { title: "Dashboard — Chispa" },
+      { name: "description", content: "Tu racha diaria, dominio por categoría, logros y velocidad de aprendizaje, todo de un vistazo." },
+      { property: "og:title", content: "Chispa Dashboard" },
+      { property: "og:description", content: "Rachas, dominio y logros." },
     ],
   }),
   component: Dashboard,

@@ -9,10 +9,10 @@ import { SpeakButton } from "@/components/SpeakButton";
 export const Route = createFileRoute("/words")({
   head: () => ({
     meta: [
-      { title: "Word Bank — HopLingo" },
-      { name: "description", content: "Browse every Spanish word with answers and built-in MCQ quizzes." },
-      { property: "og:title", content: "HopLingo Word Bank" },
-      { property: "og:description", content: "Study every word with translations, examples, and MCQ practice." },
+      { title: "Banco de palabras — Chispa" },
+      { name: "description", content: "Explora cada palabra en español con respuestas y mini-quizzes integrados." },
+      { property: "og:title", content: "Banco de palabras Chispa" },
+      { property: "og:description", content: "Estudia cada palabra con traducciones, ejemplos y práctica de opción múltiple." },
     ],
   }),
   component: WordBank,
