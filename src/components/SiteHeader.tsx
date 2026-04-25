@@ -34,11 +34,11 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link to="/" className="flex items-center gap-2 group">
           <div className="relative">
-            <img src={hopper} alt="" width={40} height={40} className="h-10 w-10 transition-transform group-hover:animate-wiggle" />
+            <img src={mascot} alt="" width={40} height={40} className="h-10 w-10 transition-transform group-hover:animate-wiggle" />
             <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-primary animate-pulse-glow" />
           </div>
           <span className="text-xl font-bold tracking-tight">
-            Hop<span className="text-gradient-berry">Lingo</span>
+            Chis<span className="text-gradient-berry">pa</span>
           </span>
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
