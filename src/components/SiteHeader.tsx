@@ -59,12 +59,47 @@ export function SiteHeader() {
             );
           })}
         </nav>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="hidden items-center gap-1.5 rounded-full bg-warning/15 px-3 py-1.5 text-sm font-semibold text-warning-foreground sm:flex">
             🔥 <span>{s.streak}</span>
           </div>
           <div className="flex items-center gap-1.5 rounded-full bg-accent/15 px-3 py-1.5 text-sm font-semibold text-accent">
             ✨ <span>{s.xp}</span>
+          </div>
+          <div className="relative" ref={menuRef}>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="flex items-center gap-2 rounded-full bg-secondary px-2 py-1 pr-3 text-sm font-semibold text-foreground transition hover:bg-secondary/80"
+              aria-haspopup="menu"
+              aria-expanded={open}
+            >
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                {initial}
+              </span>
+              <span className="hidden max-w-[8rem] truncate sm:inline">{user}</span>
+            </button>
+            {open && (
+              <div
+                role="menu"
+                className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-border bg-popover text-popover-foreground shadow-xl"
+              >
+                <div className="border-b border-border px-4 py-3">
+                  <div className="text-xs text-muted-foreground">Signed in as</div>
+                  <div className="truncate text-sm font-semibold">{user}</div>
+                </div>
+                <button
+                  type="button"
+                  className="block w-full px-4 py-2.5 text-left text-sm transition hover:bg-secondary"
+                  onClick={() => {
+                    setOpen(false);
+                    signOut();
+                  }}
+                >
+                  Switch user / Sign out
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
