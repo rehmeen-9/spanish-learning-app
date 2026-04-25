@@ -7,8 +7,11 @@ import {
   recallProbability,
   masteryScore,
 } from "./hoplingo-data";
+import { getCurrentUser, subscribeUser } from "./hoplingo-user";
 
-const STORAGE_KEY = "hoplingo-state-v1";
+const STORAGE_PREFIX = "hoplingo-state-v1";
+const storageKey = (user: string | null) =>
+  user ? `${STORAGE_PREFIX}::${user}` : STORAGE_PREFIX;
 
 export interface SessionLog {
   ts: number;
@@ -45,15 +48,17 @@ const initialState = (): AppState => ({
 });
 
 let state: AppState = initialState();
-let initialized = false;
+let loadedForUser: string | null | undefined = undefined;
 const listeners = new Set<() => void>();
 
 function load() {
-  if (initialized) return;
-  initialized = true;
+  const user = getCurrentUser();
+  if (loadedForUser === user) return;
+  loadedForUser = user;
+  state = initialState();
   if (typeof window === "undefined") return;
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(user));
     if (raw) state = { ...initialState(), ...JSON.parse(raw) };
   } catch {
     /* ignore */
@@ -68,7 +73,7 @@ function load() {
 function persist() {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(storageKey(loadedForUser ?? null), JSON.stringify(state));
   } catch {
     /* ignore */
   }
@@ -82,6 +87,15 @@ function setState(updater: (s: AppState) => AppState) {
   state = updater(state);
   persist();
   emit();
+}
+
+// Reload state when user changes (sign in / sign out / switch)
+if (typeof window !== "undefined") {
+  subscribeUser(() => {
+    loadedForUser = undefined;
+    load();
+    emit();
+  });
 }
 
 const ACHIEVEMENT_DEFS = [

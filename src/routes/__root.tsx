@@ -1,5 +1,7 @@
 import { Outlet, createRootRoute, HeadContent, Scripts, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/SiteHeader";
+import { LoginGate } from "@/components/LoginGate";
+import { useCurrentUser } from "@/lib/hoplingo-user";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -55,6 +57,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const user = useCurrentUser();
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background">
+        <LoginGate />
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
