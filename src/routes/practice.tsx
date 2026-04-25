@@ -13,10 +13,10 @@ export const Route = createFileRoute("/practice")({
   }),
   head: () => ({
     meta: [
-      { title: "Practice — HopLingo" },
-      { name: "description", content: "Smart, mixed-mode Spanish quizzes that adapt to what you need to review." },
-      { property: "og:title", content: "Practice with Hopper" },
-      { property: "og:description", content: "Multiple choice, type the translation, ES↔EN — all adaptive." },
+      { title: "Practicar — Chispa" },
+      { name: "description", content: "Quizzes inteligentes de español que se adaptan a lo que necesitas repasar." },
+      { property: "og:title", content: "Practica con Chispa" },
+      { property: "og:description", content: "Opción múltiple, escribe la traducción, ES↔EN — todo adaptativo." },
     ],
   }),
   component: Practice,
@@ -140,7 +140,7 @@ function Practice() {
     return (
       <main className="mx-auto flex min-h-[70vh] max-w-2xl flex-col items-center justify-center px-4 py-12 text-center">
         <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-7xl">
-          {pct >= 80 ? "🏆" : pct >= 50 ? "🐰" : "🌱"}
+          {pct >= 80 ? "🏆" : pct >= 50 ? "🦜" : "🌱"}
         </motion.div>
         <h2 className="mt-6 text-4xl font-bold">¡Bien hecho!</h2>
         <p className="mt-2 text-muted-foreground">You got {score.correct} / {score.total} correct</p>

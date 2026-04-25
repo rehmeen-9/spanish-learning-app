@@ -15,10 +15,10 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, Tooltip, CartesianGrid } fro
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Dashboard — HopLingo" },
-      { name: "description", content: "Your daily streak, mastery breakdown, achievements and learning velocity at a glance." },
-      { property: "og:title", content: "HopLingo Dashboard" },
-      { property: "og:description", content: "Streaks, mastery, and milestones." },
+      { title: "Dashboard — Chispa" },
+      { name: "description", content: "Tu racha diaria, dominio por categoría, logros y velocidad de aprendizaje, todo de un vistazo." },
+      { property: "og:title", content: "Chispa Dashboard" },
+      { property: "og:description", content: "Rachas, dominio y logros." },
     ],
   }),
   component: Dashboard,
@@ -36,8 +36,8 @@ function Dashboard() {
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wider text-primary">Welcome back</p>
-          <h1 className="mt-1 text-4xl font-bold md:text-5xl">Your hop today 🐰</h1>
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary">Bienvenido de vuelta</p>
+          <h1 className="mt-1 text-4xl font-bold md:text-5xl">Tu día con Chispa 🦜</h1>
         </div>
         <Link
           to="/practice"
@@ -116,7 +116,7 @@ function Dashboard() {
         <div className="mb-5 flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-bold">Mastery by category</h2>
-            <p className="text-sm text-muted-foreground">How well Hopper thinks you know each theme.</p>
+            <p className="text-sm text-muted-foreground">Qué tan bien Chispa cree que conoces cada tema.</p>
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

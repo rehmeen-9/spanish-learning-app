@@ -37,10 +37,10 @@ import { StatCard } from "@/components/StatCard";
 export const Route = createFileRoute("/progress")({
   head: () => ({
     meta: [
-      { title: "Progress Report — HopLingo" },
-      { name: "description", content: "Detailed analytics: mastery radar, forgetting curves, accuracy heatmap, weak words, and learning velocity." },
-      { property: "og:title", content: "HopLingo Progress Report" },
-      { property: "og:description", content: "Deep analytics on your Spanish learning journey." },
+      { title: "Reporte de progreso — Chispa" },
+      { name: "description", content: "Analítica detallada: radar de dominio, curvas de olvido, mapa de precisión, palabras débiles y velocidad de aprendizaje." },
+      { property: "og:title", content: "Reporte de progreso Chispa" },
+      { property: "og:description", content: "Analítica profunda de tu camino aprendiendo español." },
     ],
   }),
   component: ProgressReport,
