@@ -7,8 +7,11 @@ import {
   recallProbability,
   masteryScore,
 } from "./hoplingo-data";
+import { getCurrentUser, subscribeUser } from "./hoplingo-user";
 
-const STORAGE_KEY = "hoplingo-state-v1";
+const STORAGE_PREFIX = "hoplingo-state-v1";
+const storageKey = (user: string | null) =>
+  user ? `${STORAGE_PREFIX}::${user}` : STORAGE_PREFIX;
 
 export interface SessionLog {
   ts: number;
