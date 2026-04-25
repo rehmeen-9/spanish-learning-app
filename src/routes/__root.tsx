@@ -57,6 +57,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const user = useCurrentUser();
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background">
+        <LoginGate />
+      </div>
+    );
+  }
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
