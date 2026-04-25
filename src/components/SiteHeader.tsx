@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
-import hopper from "@/assets/hopper.png";
+import mascot from "@/assets/chispa-parrot.png";
 import { useAppState } from "@/lib/hoplingo-store";
 import { useCurrentUser, signOut } from "@/lib/hoplingo-user";
 

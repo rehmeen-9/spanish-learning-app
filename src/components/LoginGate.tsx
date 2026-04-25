@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import hopper from "@/assets/hopper.png";
+import mascot from "@/assets/chispa-parrot.png";
 import { signInUser, userExists, normalizeUsername } from "@/lib/hoplingo-user";
 
 export function LoginGate() {

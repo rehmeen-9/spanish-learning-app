@@ -1,15 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import hopper from "@/assets/hopper.png";
+import mascot from "@/assets/chispa-parrot.png";
 import { useAppState, getOverallStats } from "@/lib/hoplingo-store";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "HopLingo — Learn Spanish with Hopper the Bunny" },
-      { name: "description", content: "Smart spaced repetition Spanish learning. Track streaks, master categories, and watch your progress hop forward." },
-      { property: "og:title", content: "HopLingo — Learn Spanish, smarter" },
-      { property: "og:description", content: "Half-life regression keeps every word fresh exactly when you need it." },
+      { title: "Chispa — Aprende español con un loro tropical" },
+      { name: "description", content: "Aprendizaje inteligente del español con repetición espaciada. Lleva tu racha, domina categorías y ve tu progreso brillar." },
+      { property: "og:title", content: "Chispa — Spanish learning with a spark" },
+      { property: "og:description", content: "Half-life regression keeps every Spanish word fresh exactly when you need it." },
     ],
   }),
   component: Index,
@@ -42,17 +42,17 @@ function Index() {
           >
             <span className="inline-flex w-fit items-center gap-2 rounded-full bg-primary/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-primary">
               <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              Spanish · {stats.totalWords} words
+              Español · {stats.totalWords} palabras
             </span>
             <h1 className="mt-5 text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-              Learn Spanish with{" "}
-              <span className="text-gradient-berry">Hopper the Bunny</span>{" "}
-              <span className="inline-block animate-wiggle">🐰</span>
+              Aprende español con{" "}
+              <span className="text-gradient-berry">Chispa el Loro</span>{" "}
+              <span className="inline-block animate-wiggle">🦜</span>
             </h1>
             <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-              HopLingo schedules every word at the moment your memory needs it most — using
-              the Half-Life Regression model from Duolingo's research. The more you practice,
-              the smarter Hopper gets at <em>your</em> memory.
+              Chispa programa cada palabra justo cuando tu memoria la necesita —
+              usando un modelo de half-life regression. Cuanto más practicas,
+              mejor aprende Chispa <em>tu</em> ritmo.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -97,8 +97,8 @@ function Index() {
             <div className="relative">
               <div className="absolute inset-0 -z-10 rounded-full bg-gradient-mint blur-3xl opacity-30 animate-pulse" />
               <img
-                src={hopper}
-                alt="Hopper the bunny mascot"
+                src={mascot}
+                alt="Chispa the parrot mascot"
                 width={420}
                 height={420}
                 className="h-80 w-80 animate-float md:h-[420px] md:w-[420px]"
@@ -128,10 +128,10 @@ function Index() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
         <div className="mb-12 max-w-2xl">
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Built around <span className="text-gradient-mint">how memory actually works</span>
+            Diseñado para <span className="text-gradient-mint">cómo realmente funciona la memoria</span>
           </h2>
           <p className="mt-4 text-muted-foreground">
-            No grinding. No guessing. Just the right word, at the right time, every time.
+            Sin atascarte. Sin adivinar. Solo la palabra correcta, en el momento correcto.
           </p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -156,20 +156,20 @@ function Index() {
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6">
         <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-mint p-10 shadow-mint md:p-16">
-          <div className="absolute -right-10 -top-10 text-[12rem] opacity-10">🐰</div>
+          <div className="absolute -right-10 -top-10 text-[12rem] opacity-10">🦜</div>
           <div className="relative max-w-xl">
             <h3 className="text-3xl font-bold text-primary-foreground md:text-4xl">
-              Ready to make today count?
+              ¿Listo para encender la chispa hoy?
             </h3>
             <p className="mt-3 text-primary-foreground/90">
-              5 minutes a day with Hopper beats 60 minutes of cramming. Promise.
+              5 minutos al día con Chispa rinden más que 60 minutos de cramming. Promesa.
             </p>
             <Link
               to="/practice"
               search={{ level: 1 }}
               className="mt-6 inline-flex rounded-full bg-card px-7 py-3.5 font-semibold text-foreground shadow-pop transition hover:scale-105"
             >
-              Start a level →
+              Empezar un nivel →
             </Link>
           </div>
         </div>
