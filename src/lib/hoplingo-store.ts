@@ -99,7 +99,7 @@ if (typeof window !== "undefined") {
 }
 
 const ACHIEVEMENT_DEFS = [
-  { id: "first-hop", label: "Primera chispa", desc: "Responde tu primera palabra", emoji: "✨", check: (s: AppState) => s.sessions.length >= 1 },
+  { id: "first-hop", label: "First spark", desc: "Answer your first word", emoji: "✨", check: (s: AppState) => s.sessions.length >= 1 },
   { id: "ten-correct", label: "Quick Learner", desc: "Get 10 correct", emoji: "⚡", check: (s: AppState) => s.sessions.filter((x) => x.correct).length >= 10 },
   { id: "fifty-correct", label: "Half Century", desc: "Get 50 correct", emoji: "🎯", check: (s: AppState) => s.sessions.filter((x) => x.correct).length >= 50 },
   { id: "streak-3", label: "On a Roll", desc: "3-day streak", emoji: "🔥", check: (s: AppState) => s.streak >= 3 },
