@@ -6,8 +6,8 @@ import { useAppState, getOverallStats } from "@/lib/hoplingo-store";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Chispa — Aprende español con un loro tropical" },
-      { name: "description", content: "Aprendizaje inteligente del español con repetición espaciada. Lleva tu racha, domina categorías y ve tu progreso brillar." },
+      { title: "Chispa — Learn Spanish with a tropical parrot" },
+      { name: "description", content: "Smart Spanish learning with spaced repetition. Build streaks, master categories, and watch your progress spark." },
       { property: "og:title", content: "Chispa — Spanish learning with a spark" },
       { property: "og:description", content: "Half-life regression keeps every Spanish word fresh exactly when you need it." },
     ],
@@ -42,17 +42,17 @@ function Index() {
           >
             <span className="inline-flex w-fit items-center gap-2 rounded-full bg-primary/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-primary">
               <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              Español · {stats.totalWords} palabras
+              Spanish · {stats.totalWords} words
             </span>
             <h1 className="mt-5 text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-              Aprende español con{" "}
-              <span className="text-gradient-berry">Chispa el Loro</span>{" "}
+              Learn Spanish with{" "}
+              <span className="text-gradient-berry">Chispa the Parrot</span>{" "}
               <span className="inline-block animate-wiggle">🦜</span>
             </h1>
             <p className="mt-6 max-w-lg text-lg text-muted-foreground">
-              Chispa programa cada palabra justo cuando tu memoria la necesita —
-              usando un modelo de half-life regression. Cuanto más practicas,
-              mejor aprende Chispa <em>tu</em> ritmo.
+              Chispa schedules every word right when your memory needs it —
+              using a half-life regression model. The more you practice, the
+              better Chispa learns <em>your</em> pace.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -109,7 +109,7 @@ function Index() {
                 transition={{ delay: 0.8 }}
                 className="absolute -right-4 top-12 rounded-2xl rounded-tl-sm bg-card px-4 py-3 shadow-pop"
               >
-                <p className="text-sm font-medium">¡Hola! Listo para aprender? 🌟</p>
+                <p className="text-sm font-medium">¡Hola! Ready to learn? 🌟</p>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -128,10 +128,10 @@ function Index() {
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
         <div className="mb-12 max-w-2xl">
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Diseñado para <span className="text-gradient-mint">cómo realmente funciona la memoria</span>
+            Designed for <span className="text-gradient-mint">how memory actually works</span>
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Sin atascarte. Sin adivinar. Solo la palabra correcta, en el momento correcto.
+            No cramming. No guessing. Just the right word, at the right moment.
           </p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -159,17 +159,17 @@ function Index() {
           <div className="absolute -right-10 -top-10 text-[12rem] opacity-10">🦜</div>
           <div className="relative max-w-xl">
             <h3 className="text-3xl font-bold text-primary-foreground md:text-4xl">
-              ¿Listo para encender la chispa hoy?
+              Ready to light the spark today?
             </h3>
             <p className="mt-3 text-primary-foreground/90">
-              5 minutos al día con Chispa rinden más que 60 minutos de cramming. Promesa.
+              5 minutes a day with Chispa beats 60 minutes of cramming. Promise.
             </p>
             <Link
               to="/practice"
               search={{ level: 1 }}
               className="mt-6 inline-flex rounded-full bg-card px-7 py-3.5 font-semibold text-foreground shadow-pop transition hover:scale-105"
             >
-              Empezar un nivel →
+              Start a level →
             </Link>
           </div>
         </div>

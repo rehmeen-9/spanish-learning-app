@@ -36,8 +36,8 @@ function Dashboard() {
     <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wider text-primary">Bienvenido de vuelta</p>
-          <h1 className="mt-1 text-4xl font-bold md:text-5xl">Tu día con Chispa 🦜</h1>
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary">Welcome back</p>
+          <h1 className="mt-1 text-4xl font-bold md:text-5xl">Your day with Chispa 🦜</h1>
         </div>
         <Link
           to="/practice"

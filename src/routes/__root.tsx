@@ -27,8 +27,8 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Chispa — Aprende español con un loro tropical" },
-      { name: "description", content: "Práctica inteligente de vocabulario en español con repetición espaciada. Rachas, dashboard y reportes de progreso detallados." },
+      { title: "Chispa — Learn Spanish with a tropical parrot" },
+      { name: "description", content: "Smart Spanish vocabulary practice with spaced repetition. Streaks, dashboard, and detailed progress reports." },
       { name: "author", content: "Chispa" },
       { property: "og:title", content: "Chispa — Spanish learning with a spark" },
       { property: "og:description", content: "Smart Spanish vocabulary practice powered by half-life regression." },

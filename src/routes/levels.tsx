@@ -13,10 +13,10 @@ import {
 export const Route = createFileRoute("/levels")({
   head: () => ({
     meta: [
-      { title: "Niveles — Chispa" },
-      { name: "description", content: "Avanza por 6 niveles con grupos de categorías. Domina cada grupo para desbloquear el siguiente." },
-      { property: "og:title", content: "Niveles de Chispa" },
-      { property: "og:description", content: "Brote, Chispa, Explorador, Viajero, Lingüista, Maestro." },
+      { title: "Levels — Chispa" },
+      { name: "description", content: "Progress through 6 levels with category groups. Master each group to unlock the next." },
+      { property: "og:title", content: "Chispa Levels" },
+      { property: "og:description", content: "Sprout, Spark, Explorer, Traveler, Linguist, Master." },
     ],
   }),
   component: LevelsPage,

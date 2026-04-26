@@ -13,10 +13,10 @@ export const Route = createFileRoute("/practice")({
   }),
   head: () => ({
     meta: [
-      { title: "Practicar — Chispa" },
-      { name: "description", content: "Quizzes inteligentes de español que se adaptan a lo que necesitas repasar." },
-      { property: "og:title", content: "Practica con Chispa" },
-      { property: "og:description", content: "Opción múltiple, escribe la traducción, ES↔EN — todo adaptativo." },
+      { title: "Practice — Chispa" },
+      { name: "description", content: "Smart Spanish quizzes that adapt to what you need to review." },
+      { property: "og:title", content: "Practice with Chispa" },
+      { property: "og:description", content: "Multiple choice, type-the-translation, ES↔EN — all adaptive." },
     ],
   }),
   component: Practice,
@@ -142,7 +142,7 @@ function Practice() {
         <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-7xl">
           {pct >= 80 ? "🏆" : pct >= 50 ? "🦜" : "🌱"}
         </motion.div>
-        <h2 className="mt-6 text-4xl font-bold">¡Bien hecho!</h2>
+        <h2 className="mt-6 text-4xl font-bold">Well done!</h2>
         <p className="mt-2 text-muted-foreground">You got {score.correct} / {score.total} correct</p>
         <div className="mt-8 grid grid-cols-3 gap-4">
           <div className="rounded-2xl bg-card p-4 shadow-soft">
@@ -294,7 +294,7 @@ function Practice() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className={`text-lg font-bold ${feedback.correct ? "text-primary" : "text-accent"}`}>
-                    {feedback.correct ? "¡Correcto! 🎉" : "Not quite 💔"}
+                    {feedback.correct ? "Correct! 🎉" : "Not quite 💔"}
                   </p>
                   <p className="mt-1 text-sm text-muted-foreground">
                     Answer: <span className="font-semibold text-foreground">{feedback.answer}</span>
