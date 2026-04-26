@@ -1,19 +1,45 @@
 // Browser Web Speech API recognition wrapper for Chispa.
 // Lenient pronunciation matcher tolerant of accents, casing, and punctuation.
 
-type SR = typeof window extends { SpeechRecognition: infer T }
-  ? T
-  : typeof window extends { webkitSpeechRecognition: infer T }
-    ? T
-    : unknown;
+// Minimal ambient types — SpeechRecognition isn't in the default lib.dom.
+interface SRAlternative {
+  transcript: string;
+  confidence: number;
+}
+interface SRResult {
+  readonly length: number;
+  readonly isFinal: boolean;
+  [index: number]: SRAlternative;
+}
+interface SRResultList {
+  readonly length: number;
+  [index: number]: SRResult;
+}
+interface SREvent extends Event {
+  readonly resultIndex: number;
+  readonly results: SRResultList;
+}
+interface SRErrorEvent extends Event {
+  readonly error: string;
+}
+interface SRInstance extends EventTarget {
+  lang: string;
+  interimResults: boolean;
+  continuous: boolean;
+  maxAlternatives: number;
+  start(): void;
+  stop(): void;
+  abort(): void;
+  onresult: ((e: SREvent) => void) | null;
+  onerror: ((e: SRErrorEvent) => void) | null;
+  onend: (() => void) | null;
+}
 
-function getRecognitionCtor():
-  | (new () => SpeechRecognition)
-  | null {
+function getRecognitionCtor(): (new () => SRInstance) | null {
   if (typeof window === "undefined") return null;
   const w = window as unknown as {
-    SpeechRecognition?: new () => SpeechRecognition;
-    webkitSpeechRecognition?: new () => SpeechRecognition;
+    SpeechRecognition?: new () => SRInstance;
+    webkitSpeechRecognition?: new () => SRInstance;
   };
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
@@ -54,7 +80,7 @@ export function startRecognition(opts: RecognizeOptions): ActiveRecognition {
   let resolved = false;
 
   const promise = new Promise<string>((resolve, reject) => {
-    rec.onresult = (e: SpeechRecognitionEvent) => {
+    rec.onresult = (e: SREvent) => {
       let interim = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const res = e.results[i];
@@ -64,7 +90,7 @@ export function startRecognition(opts: RecognizeOptions): ActiveRecognition {
       }
       if (interim && opts.onPartial) opts.onPartial(interim.trim());
     };
-    rec.onerror = (e: SpeechRecognitionErrorEvent) => {
+    rec.onerror = (e: SRErrorEvent) => {
       if (resolved) return;
       resolved = true;
       reject(new Error(e.error || "speech-error"));
