@@ -12,7 +12,15 @@ function load() {
   initialized = true;
   if (typeof window === "undefined") return;
   try {
-    cachedUser = localStorage.getItem(CURRENT_USER_KEY);
+    // Use sessionStorage for the active user so each fresh visit
+    // (new tab / reopened browser) prompts for the username again.
+    cachedUser = sessionStorage.getItem(CURRENT_USER_KEY);
+    // Migrate away from any legacy localStorage entry so we don't auto-resume.
+    try {
+      localStorage.removeItem(CURRENT_USER_KEY);
+    } catch {
+      /* ignore */
+    }
   } catch {
     /* ignore */
   }
@@ -62,7 +70,7 @@ export function signInUser(name: string): { isNew: boolean; username: string } {
     saveUsers(users);
   }
   if (typeof window !== "undefined") {
-    localStorage.setItem(CURRENT_USER_KEY, n);
+    sessionStorage.setItem(CURRENT_USER_KEY, n);
   }
   cachedUser = n;
   emit();
@@ -71,7 +79,7 @@ export function signInUser(name: string): { isNew: boolean; username: string } {
 
 export function signOut() {
   if (typeof window !== "undefined") {
-    localStorage.removeItem(CURRENT_USER_KEY);
+    sessionStorage.removeItem(CURRENT_USER_KEY);
   }
   cachedUser = null;
   emit();
@@ -84,7 +92,7 @@ export function deleteUser(name: string) {
   if (typeof window !== "undefined") {
     localStorage.removeItem(`hoplingo-state-v1::${n}`);
     if (cachedUser === n) {
-      localStorage.removeItem(CURRENT_USER_KEY);
+      sessionStorage.removeItem(CURRENT_USER_KEY);
       cachedUser = null;
     }
   }
