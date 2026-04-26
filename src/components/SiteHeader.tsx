@@ -8,6 +8,7 @@ const links = [
   { to: "/", label: "Home" },
   { to: "/levels", label: "Levels" },
   { to: "/words", label: "Word Bank" },
+  { to: "/speak", label: "Listen & Speak" },
   { to: "/dashboard", label: "Dashboard" },
   { to: "/progress", label: "Progress" },
 ] as const;
