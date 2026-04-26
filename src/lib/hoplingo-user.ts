@@ -2,24 +2,42 @@ import { useEffect, useState } from "react";
 
 const USERS_KEY = "hoplingo-users-v1";
 const CURRENT_USER_KEY = "hoplingo-current-user-v1";
+const PAGELOAD_KEY = "hoplingo-pageload-id-v1";
 
 const listeners = new Set<() => void>();
 let cachedUser: string | null = null;
 let initialized = false;
+
+// A unique id generated for THIS page load (in-memory only).
+// If sessionStorage's stored id doesn't match, the user opened the
+// link freshly (new tab, reopened browser, refreshed page) and we
+// must prompt for the username again.
+const PAGELOAD_ID =
+  typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2) + Date.now().toString(36);
 
 function load() {
   if (initialized) return;
   initialized = true;
   if (typeof window === "undefined") return;
   try {
-    // Use sessionStorage for the active user so each fresh visit
-    // (new tab / reopened browser) prompts for the username again.
-    cachedUser = sessionStorage.getItem(CURRENT_USER_KEY);
-    // Migrate away from any legacy localStorage entry so we don't auto-resume.
+    // Drop any legacy persistent entry so it can never auto-resume.
     try {
       localStorage.removeItem(CURRENT_USER_KEY);
     } catch {
       /* ignore */
+    }
+
+    const storedPageload = sessionStorage.getItem(PAGELOAD_KEY);
+    if (storedPageload === PAGELOAD_ID) {
+      // Same page-load (in-app navigation) — keep the active user.
+      cachedUser = sessionStorage.getItem(CURRENT_USER_KEY);
+    } else {
+      // Fresh visit — wipe the active user so the LoginGate shows.
+      sessionStorage.removeItem(CURRENT_USER_KEY);
+      sessionStorage.setItem(PAGELOAD_KEY, PAGELOAD_ID);
+      cachedUser = null;
     }
   } catch {
     /* ignore */
