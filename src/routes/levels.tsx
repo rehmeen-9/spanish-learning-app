@@ -140,13 +140,24 @@ function LevelsPage() {
                         </div>
 
                         {catUnlocked ? (
-                          <Link
-                            to="/practice"
-                            search={{ level: lvl.id, category: c.category }}
-                            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-primary py-2 text-sm font-semibold text-primary-foreground shadow-mint transition hover:scale-[1.02]"
-                          >
-                            {completed ? "Review" : "Practice"} →
-                          </Link>
+                          <div className="mt-3 flex gap-2">
+                            <Link
+                              to="/practice"
+                              search={{ level: lvl.id, category: c.category }}
+                              className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-full bg-primary py-2 text-sm font-semibold text-primary-foreground shadow-mint transition hover:scale-[1.02]"
+                            >
+                              {completed ? "Review" : "Practice"} →
+                            </Link>
+                            <Link
+                              to="/pronounce"
+                              search={{ level: lvl.id, category: c.category }}
+                              aria-label="Voice practice"
+                              title="Voice practice"
+                              className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground transition hover:bg-primary hover:text-primary-foreground"
+                            >
+                              🎤
+                            </Link>
+                          </div>
                         ) : (
                           <div className="mt-3 rounded-full bg-muted py-2 text-center text-xs text-muted-foreground">
                             Finish previous group to unlock
@@ -159,15 +170,24 @@ function LevelsPage() {
               )}
 
               {/* Practice all */}
-              {unlocked && lvl.categories.length > 1 && (
-                <div className="mt-5 flex justify-end">
+              {unlocked && (
+                <div className="mt-5 flex flex-wrap justify-end gap-2">
                   <Link
-                    to="/practice"
+                    to="/pronounce"
                     search={{ level: lvl.id }}
-                    className="rounded-full bg-card px-5 py-2 text-sm font-semibold shadow-soft transition hover:-translate-y-0.5"
+                    className="rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground shadow-soft transition hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground"
                   >
-                    Mixed practice (all groups) →
+                    🎤 Voice practice →
                   </Link>
+                  {lvl.categories.length > 1 && (
+                    <Link
+                      to="/practice"
+                      search={{ level: lvl.id }}
+                      className="rounded-full bg-card px-5 py-2 text-sm font-semibold shadow-soft transition hover:-translate-y-0.5"
+                    >
+                      Mixed practice (all groups) →
+                    </Link>
+                  )}
                 </div>
               )}
             </motion.section>
