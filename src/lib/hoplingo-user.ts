@@ -7,15 +7,20 @@ const PAGELOAD_KEY = "hoplingo-pageload-id-v1";
 const listeners = new Set<() => void>();
 let cachedUser: string | null = null;
 let initialized = false;
+let pageloadId: string | null = null;
 
 // A unique id generated for THIS page load (in-memory only).
 // If sessionStorage's stored id doesn't match, the user opened the
 // link freshly (new tab, reopened browser, refreshed page) and we
 // must prompt for the username again.
-const PAGELOAD_ID =
-  typeof crypto !== "undefined" && "randomUUID" in crypto
-    ? crypto.randomUUID()
-    : Math.random().toString(36).slice(2) + Date.now().toString(36);
+function getPageloadId() {
+  if (pageloadId) return pageloadId;
+  pageloadId =
+    typeof window.crypto !== "undefined" && "randomUUID" in window.crypto
+      ? window.crypto.randomUUID()
+      : Math.random().toString(36).slice(2) + Date.now().toString(36);
+  return pageloadId;
+}
 
 function load() {
   if (initialized) return;
@@ -29,14 +34,15 @@ function load() {
       /* ignore */
     }
 
+    const pageLoadId = getPageloadId();
     const storedPageload = sessionStorage.getItem(PAGELOAD_KEY);
-    if (storedPageload === PAGELOAD_ID) {
+    if (storedPageload === pageLoadId) {
       // Same page-load (in-app navigation) — keep the active user.
       cachedUser = sessionStorage.getItem(CURRENT_USER_KEY);
     } else {
       // Fresh visit — wipe the active user so the LoginGate shows.
       sessionStorage.removeItem(CURRENT_USER_KEY);
-      sessionStorage.setItem(PAGELOAD_KEY, PAGELOAD_ID);
+      sessionStorage.setItem(PAGELOAD_KEY, pageLoadId);
       cachedUser = null;
     }
   } catch {
