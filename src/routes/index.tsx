@@ -124,6 +124,45 @@ function Index() {
         </div>
       </section>
 
+      {/* VOICE PRACTICE */}
+      <section className="mx-auto max-w-7xl px-4 pt-16 sm:px-6">
+        <div className="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-accent/15 px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent">
+              🎤 New
+            </span>
+            <h2 className="mt-3 text-4xl font-bold tracking-tight md:text-5xl">
+              Speak it. <span className="text-gradient-berry">Hear it.</span>
+            </h2>
+            <p className="mt-3 max-w-xl text-muted-foreground">
+              Train your tongue, not just your eyes. Chispa says the word, you say it back — and gets feedback instantly.
+            </p>
+          </div>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2">
+          <motion.div whileHover={{ y: -6 }} className="rounded-3xl border border-border bg-gradient-card p-7 shadow-soft transition-shadow hover:shadow-mint">
+            <div className="text-4xl">🎤</div>
+            <h3 className="mt-4 text-2xl font-bold">Speak &amp; Listen</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Pronunciation practice — Chispa plays a Spanish word, you repeat it into the mic, get a similarity score and feedback.
+            </p>
+            <Link to="/pronounce" className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-mint transition hover:scale-105">
+              Start speaking →
+            </Link>
+          </motion.div>
+          <motion.div whileHover={{ y: -6 }} className="rounded-3xl border border-border bg-gradient-card p-7 shadow-soft transition-shadow hover:shadow-mint">
+            <div className="text-4xl">🔤</div>
+            <h3 className="mt-4 text-2xl font-bold">Vocab Trainer</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Duolingo-style bilingual flow — see the English word, reveal Spanish with a phonetic guide (e.g. "gato" → GAH-toh), then say it.
+            </p>
+            <Link to="/vocab" className="mt-5 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-accent-foreground shadow-pop transition hover:scale-105">
+              Open trainer →
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
       {/* FEATURES */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
         <div className="mb-12 max-w-2xl">
