@@ -8,6 +8,7 @@ const links = [
   { to: "/", label: "Home" },
   { to: "/levels", label: "Levels" },
   { to: "/vocab", label: "Vocab Trainer" },
+  { to: "/pronounce", label: "Speak & Listen" },
   { to: "/words", label: "Word Bank" },
   { to: "/dashboard", label: "Dashboard" },
   { to: "/progress", label: "Progress" },
