@@ -6,18 +6,18 @@ function speakGreeting(name: string, returning: boolean) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   const display = name.charAt(0).toUpperCase() + name.slice(1);
   const text = returning
-    ? `Hello there ${display}! Welcome back. Ready for some spicy Spanish?`
-    : `Hello there ${display}! How are you? Ready for some spicy Spanish?`;
+    ? `¡Hola ${display}! ¡Bienvenido de nuevo! ¿Listo para un poco de español picante?`
+    : `¡Hola ${display}! ¿Cómo estás? ¿Listo para un poco de español picante?`;
   try {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US";
+    u.lang = "es-ES";
     u.rate = 1;
     u.pitch = 1.3;
     u.volume = 1;
     const voices = window.speechSynthesis.getVoices();
-    const en = voices.find((v) => v.lang.toLowerCase().startsWith("en"));
-    if (en) u.voice = en;
+    const es = voices.find((v) => v.lang.toLowerCase().startsWith("es"));
+    if (es) u.voice = es;
     window.speechSynthesis.speak(u);
   } catch {
     // ignore
