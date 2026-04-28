@@ -146,7 +146,7 @@ function Index() {
             <p className="mt-2 text-sm text-muted-foreground">
               Pronunciation practice — Chispa plays a Spanish word, you repeat it into the mic, get a similarity score and feedback.
             </p>
-            <Link to="/pronounce" className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-mint transition hover:scale-105">
+            <Link to="/pronounce" search={{ level: 1 }} className="mt-5 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-mint transition hover:scale-105">
               Start speaking →
             </Link>
           </motion.div>
