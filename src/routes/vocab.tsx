@@ -150,7 +150,7 @@ function VocabTrainer() {
         <motion.div initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-7xl">
           {pct >= 80 ? "🎉" : pct >= 50 ? "🦜" : "🌱"}
         </motion.div>
-        <h2 className="mt-6 text-4xl font-bold">¡Excelente!</h2>
+        <h2 className="mt-6 text-4xl font-bold">Excellent!</h2>
         <p className="mt-2 text-muted-foreground">You pronounced {score.correct} / {score.total} correctly</p>
         <div className="mt-8 grid grid-cols-3 gap-4">
           <div className="rounded-2xl bg-card p-4 shadow-soft">
@@ -206,7 +206,7 @@ function VocabTrainer() {
         </span>
         <ArrowRight className="h-3 w-3 text-muted-foreground" />
         <span className={`rounded-full px-3 py-1 font-semibold uppercase tracking-wider ${phase === "spanish" ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}>
-          2. Español 🎤
+          2. Spanish 🎤
         </span>
       </div>
 
@@ -318,7 +318,7 @@ function VocabTrainer() {
                       <p className={`text-lg font-bold ${
                         result.verdict === "great" ? "text-primary" : result.verdict === "good" ? "text-warning-foreground" : "text-accent"
                       }`}>
-                        {result.verdict === "great" ? "¡Perfecto! Move on 🎉" : result.verdict === "good" ? "Close — try once more!" : "Not quite — listen and try again"}
+                        {result.verdict === "great" ? "Perfect! Move on 🎉" : result.verdict === "good" ? "Close — try once more!" : "Not quite — listen and try again"}
                       </p>
                       <p className="mt-1 text-sm text-muted-foreground">
                         I heard: <span className="font-semibold text-foreground">"{result.transcript || "—"}"</span>
