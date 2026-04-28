@@ -7,6 +7,7 @@ import { useCurrentUser, signOut } from "@/lib/hoplingo-user";
 const links = [
   { to: "/", label: "Home" },
   { to: "/levels", label: "Levels" },
+  { to: "/vocab", label: "Vocab Trainer" },
   { to: "/words", label: "Word Bank" },
   { to: "/dashboard", label: "Dashboard" },
   { to: "/progress", label: "Progress" },
