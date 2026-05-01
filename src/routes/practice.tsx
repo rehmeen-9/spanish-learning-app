@@ -76,10 +76,10 @@ function Practice() {
 
   useEffect(() => {
     if (questions.length === 0 && due.length > 0) {
-      // Teach MCQs first, then fill-in-the-blank (typing) questions
+      // Mix MCQs first, then typing — capped at 15 total
       const mcQs = due.map((w) => buildQuestion(w, pool, "mc"));
       const typeQs = due.map((w) => buildQuestion(w, pool, "type"));
-      setQuestions([...mcQs, ...typeQs]);
+      setQuestions([...mcQs, ...typeQs].slice(0, 15));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [due.length, pool.length]);
