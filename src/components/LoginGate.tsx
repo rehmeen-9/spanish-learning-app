@@ -4,21 +4,30 @@ import { signInUser, userExists, normalizeUsername } from "@/lib/hoplingo-user";
 import { pickSpanishVoice, warmSpanishVoices } from "@/lib/speak";
 
 function speakGreeting(name: string, returning: boolean) {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  if (typeof window === "undefined" || !("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
   const display = name.charAt(0).toUpperCase() + name.slice(1);
   const text = returning
-    ? `¡Hola ${display}! ¡Bienvenido de nuevo! ¿Listo para un poco de español picante?`
-    : `¡Hola ${display}! ¿Cómo estás? ¿Listo para un poco de español picante?`;
+    ? `¡Hola, ${display}! Qué gusto verte otra vez, corazón. ¿Te apetece un poquito de español picante?`
+    : `¡Hola, ${display}! ¿Cómo estás, corazón? ¿Te apetece un poquito de español picante?`;
   try {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "es-ES";
-    u.rate = 0.9;
-    u.pitch = 1.18;
-    u.volume = 1;
-    const pick = pickSpanishVoice("es-ES");
-    if (pick) u.voice = pick;
-    window.speechSynthesis.speak(u);
+    const speakNow = () => {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "es-ES";
+      u.rate = 0.88;
+      u.pitch = 1.22;
+      u.volume = 1;
+      const pick = pickSpanishVoice("es-ES");
+      if (pick) u.voice = pick;
+      window.speechSynthesis.speak(u);
+    };
+
+    if (window.speechSynthesis.getVoices().length === 0) {
+      window.speechSynthesis.addEventListener("voiceschanged", speakNow, { once: true });
+      window.setTimeout(speakNow, 250);
+      return;
+    }
+    speakNow();
   } catch {
     // ignore
   }
