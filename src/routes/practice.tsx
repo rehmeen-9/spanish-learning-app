@@ -76,10 +76,10 @@ function Practice() {
 
   useEffect(() => {
     if (questions.length === 0 && due.length > 0) {
-      // Teach MCQs first, then fill-in-the-blank (typing) questions
+      // Mix MCQs first, then typing — capped at 15 total
       const mcQs = due.map((w) => buildQuestion(w, pool, "mc"));
       const typeQs = due.map((w) => buildQuestion(w, pool, "type"));
-      setQuestions([...mcQs, ...typeQs]);
+      setQuestions([...mcQs, ...typeQs].slice(0, 15));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [due.length, pool.length]);
@@ -100,10 +100,8 @@ function Practice() {
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "") // strip accents (á→a, ñ→n)
-      .replace(/[^a-z0-9\s/,]/g, "") // strip ALL symbols/punctuation, keep letters/digits + separators
-      .replace(/\s+/g, " ")
-      .trim()
-      .replace(/^(the|a|an|to|el|la|los|las|un|una|unos|unas)\s+/i, "");
+      .replace(/[^a-z0-9/,]/g, "") // strip ALL symbols/punctuation/whitespace, keep letters/digits + separators
+      .replace(/^(the|a|an|to|el|la|los|las|un|una|unos|unas)/i, "");
   }
 
   function isAnswerCorrect(user: string, expected: string): boolean {
