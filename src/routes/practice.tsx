@@ -100,10 +100,8 @@ function Practice() {
       .toLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "") // strip accents (á→a, ñ→n)
-      .replace(/[^a-z0-9\s/,]/g, "") // strip ALL symbols/punctuation, keep letters/digits + separators
-      .replace(/\s+/g, " ")
-      .trim()
-      .replace(/^(the|a|an|to|el|la|los|las|un|una|unos|unas)\s+/i, "");
+      .replace(/[^a-z0-9/,]/g, "") // strip ALL symbols/punctuation/whitespace, keep letters/digits + separators
+      .replace(/^(the|a|an|to|el|la|los|las|un|una|unos|unas)/i, "");
   }
 
   function isAnswerCorrect(user: string, expected: string): boolean {
