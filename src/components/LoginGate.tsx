@@ -12,12 +12,22 @@ function speakGreeting(name: string, returning: boolean) {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "es-ES";
-    u.rate = 1;
-    u.pitch = 1.3;
+    u.rate = 0.92;
+    u.pitch = 1.05;
     u.volume = 1;
     const voices = window.speechSynthesis.getVoices();
-    const es = voices.find((v) => v.lang.toLowerCase().startsWith("es"));
-    if (es) u.voice = es;
+    const isFemale = (v: SpeechSynthesisVoice) =>
+      /female|mujer|woman|monica|mónica|lucia|lucía|paulina|sofia|sofía|elena|laura|marisol|penelope|penélope|esperanza|conchita|google.*español/i.test(
+        `${v.name} ${v.voiceURI}`
+      );
+    const esES = voices.filter((v) => v.lang.toLowerCase().startsWith("es-es"));
+    const esAny = voices.filter((v) => v.lang.toLowerCase().startsWith("es"));
+    const pick =
+      esES.find(isFemale) ||
+      esAny.find(isFemale) ||
+      esES[0] ||
+      esAny[0];
+    if (pick) u.voice = pick;
     window.speechSynthesis.speak(u);
   } catch {
     // ignore
