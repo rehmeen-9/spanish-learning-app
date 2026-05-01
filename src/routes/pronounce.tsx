@@ -37,9 +37,11 @@ function Pronounce() {
   const activeCats = category && lvl.categories.includes(category as never)
     ? [category as (typeof lvl.categories)[number]]
     : lvl.categories;
-  const due = useDueWords(activeCats, 10);
+  const wordCount = (t: string) => t.trim().split(/\s+/).length;
+  const dueRaw = useDueWords(activeCats, 20);
+  const due = useMemo(() => dueRaw.filter((w) => wordCount(w.es) <= 10).slice(0, 10), [dueRaw]);
   const fallback = useMemo(
-    () => WORDS.filter((w) => activeCats.includes(w.category)).slice(0, 10),
+    () => WORDS.filter((w) => activeCats.includes(w.category) && wordCount(w.es) <= 10).slice(0, 10),
     [activeCats],
   );
   const queue = due.length > 0 ? due : fallback;
