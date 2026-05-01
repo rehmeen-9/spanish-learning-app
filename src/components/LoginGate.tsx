@@ -1,6 +1,7 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import mascot from "@/assets/chispa-parrot.png";
 import { signInUser, userExists, normalizeUsername } from "@/lib/hoplingo-user";
+import { pickSpanishVoice, warmSpanishVoices } from "@/lib/speak";
 
 function speakGreeting(name: string, returning: boolean) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -12,21 +13,10 @@ function speakGreeting(name: string, returning: boolean) {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "es-ES";
-    u.rate = 0.92;
-    u.pitch = 1.05;
+    u.rate = 0.9;
+    u.pitch = 1.18;
     u.volume = 1;
-    const voices = window.speechSynthesis.getVoices();
-    const isFemale = (v: SpeechSynthesisVoice) =>
-      /female|mujer|woman|monica|mónica|lucia|lucía|paulina|sofia|sofía|elena|laura|marisol|penelope|penélope|esperanza|conchita|google.*español/i.test(
-        `${v.name} ${v.voiceURI}`
-      );
-    const esES = voices.filter((v) => v.lang.toLowerCase().startsWith("es-es"));
-    const esAny = voices.filter((v) => v.lang.toLowerCase().startsWith("es"));
-    const pick =
-      esES.find(isFemale) ||
-      esAny.find(isFemale) ||
-      esES[0] ||
-      esAny[0];
+    const pick = pickSpanishVoice("es-ES");
     if (pick) u.voice = pick;
     window.speechSynthesis.speak(u);
   } catch {
@@ -37,6 +27,10 @@ function speakGreeting(name: string, returning: boolean) {
 export function LoginGate() {
   const [name, setName] = useState("");
   const [hint, setHint] = useState<string | null>(null);
+
+  useEffect(() => {
+    warmSpanishVoices();
+  }, []);
 
   const trimmed = normalizeUsername(name);
   const exists = trimmed ? userExists(trimmed) : false;
@@ -81,6 +75,7 @@ export function LoginGate() {
             setName(e.target.value);
             setHint(null);
           }}
+          onFocus={warmSpanishVoices}
           placeholder="e.g. parrot_friend"
           className="mt-2 w-full rounded-xl border border-border bg-background px-4 py-3 text-base outline-none ring-primary/30 transition focus:ring-4"
         />

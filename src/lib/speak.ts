@@ -6,20 +6,39 @@ let voicesInitialized = false;
 let lastSpeakAt = 0;
 let lastSpokenText = "";
 
+const FEMALE_SPANISH_VOICE_HINTS =
+  /female|mujer|woman|mónica|monica|lucía|lucia|paulina|sofía|sofia|elena|helena|laura|marisol|penélope|penelope|esperanza|conchita|sabina|paloma|carmen|isabel|maria|maría|julia|lola|alba|teresa|ximena|camila|valentina|paula|angélica|angelica|elvira|ines|inés|google.*español/i;
+
 function loadVoices(): SpeechSynthesisVoice[] {
   if (typeof window === "undefined" || !window.speechSynthesis) return [];
   return window.speechSynthesis.getVoices();
 }
 
-function pickSpanishVoice(): SpeechSynthesisVoice | null {
+export function pickSpanishVoice(preferredLang = "es-ES"): SpeechSynthesisVoice | null {
   const voices = loadVoices();
   if (voices.length === 0) return null;
-  const exact = voices.find((v) => v.lang.toLowerCase() === "es-es");
-  if (exact) return exact;
-  const region = voices.find((v) => v.lang.toLowerCase().startsWith("es-"));
-  if (region) return region;
-  const any = voices.find((v) => v.lang.toLowerCase().startsWith("es"));
-  return any ?? null;
+
+  const preferred = preferredLang.toLowerCase();
+  const score = (voice: SpeechSynthesisVoice) => {
+    const lang = voice.lang.toLowerCase();
+    if (!lang.startsWith("es")) return -1;
+    let value = 10;
+    if (lang === preferred) value += 80;
+    else if (lang === "es-es") value += 65;
+    else if (lang.startsWith("es-")) value += 35;
+    if (FEMALE_SPANISH_VOICE_HINTS.test(`${voice.name} ${voice.voiceURI}`)) value += 120;
+    if (/premium|enhanced|natural|neural|google|microsoft/i.test(`${voice.name} ${voice.voiceURI}`)) value += 8;
+    return value;
+  };
+
+  return voices
+    .filter((voice) => voice.lang.toLowerCase().startsWith("es"))
+    .sort((a, b) => score(b) - score(a))[0] ?? null;
+}
+
+export function warmSpanishVoices() {
+  if (!isSpeechSupported()) return;
+  initVoicesOnce();
 }
 
 function initVoicesOnce() {
