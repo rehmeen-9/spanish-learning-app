@@ -55,6 +55,8 @@ function Pronounce() {
   const [done, setDone] = useState(false);
   const recRef = useRef<{ stop: () => void } | null>(null);
   const startRef = useRef(Date.now());
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const gotResultRef = useRef(false);
 
   const word: Word | undefined = queue[idx];
   const sttSupported = isRecognitionSupported();
