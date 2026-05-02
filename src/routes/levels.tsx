@@ -148,15 +148,6 @@ function LevelsPage() {
                             >
                               {completed ? "Review" : "Practice"} →
                             </Link>
-                            <Link
-                              to="/pronounce"
-                              search={{ level: lvl.id, category: c.category }}
-                              aria-label="Voice practice"
-                              title="Voice practice"
-                              className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground transition hover:bg-primary hover:text-primary-foreground"
-                            >
-                              🎤
-                            </Link>
                           </div>
                         ) : (
                           <div className="mt-3 rounded-full bg-muted py-2 text-center text-xs text-muted-foreground">
@@ -170,24 +161,15 @@ function LevelsPage() {
               )}
 
               {/* Practice all */}
-              {unlocked && (
+              {unlocked && lvl.categories.length > 1 && (
                 <div className="mt-5 flex flex-wrap justify-end gap-2">
                   <Link
-                    to="/pronounce"
+                    to="/practice"
                     search={{ level: lvl.id }}
-                    className="rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground shadow-soft transition hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground"
+                    className="rounded-full bg-card px-5 py-2 text-sm font-semibold shadow-soft transition hover:-translate-y-0.5"
                   >
-                    🎤 Voice practice →
+                    Mixed practice (all groups) →
                   </Link>
-                  {lvl.categories.length > 1 && (
-                    <Link
-                      to="/practice"
-                      search={{ level: lvl.id }}
-                      className="rounded-full bg-card px-5 py-2 text-sm font-semibold shadow-soft transition hover:-translate-y-0.5"
-                    >
-                      Mixed practice (all groups) →
-                    </Link>
-                  )}
                 </div>
               )}
             </motion.section>
