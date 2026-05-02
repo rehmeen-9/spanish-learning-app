@@ -148,15 +148,6 @@ function LevelsPage() {
                             >
                               {completed ? "Review" : "Practice"} →
                             </Link>
-                            <Link
-                              to="/pronounce"
-                              search={{ level: lvl.id, category: c.category }}
-                              aria-label="Voice practice"
-                              title="Voice practice"
-                              className="inline-flex items-center justify-center rounded-full bg-secondary px-3 py-2 text-sm font-semibold text-secondary-foreground transition hover:bg-primary hover:text-primary-foreground"
-                            >
-                              🎤
-                            </Link>
                           </div>
                         ) : (
                           <div className="mt-3 rounded-full bg-muted py-2 text-center text-xs text-muted-foreground">

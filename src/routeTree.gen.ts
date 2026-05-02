@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WordsRouteImport } from './routes/words'
 import { Route as VocabRouteImport } from './routes/vocab'
-import { Route as PronounceRouteImport } from './routes/pronounce'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as LevelsRouteImport } from './routes/levels'
@@ -26,11 +25,6 @@ const WordsRoute = WordsRouteImport.update({
 const VocabRoute = VocabRouteImport.update({
   id: '/vocab',
   path: '/vocab',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PronounceRoute = PronounceRouteImport.update({
-  id: '/pronounce',
-  path: '/pronounce',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProgressRoute = ProgressRouteImport.update({
@@ -65,7 +59,6 @@ export interface FileRoutesByFullPath {
   '/levels': typeof LevelsRoute
   '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
-  '/pronounce': typeof PronounceRoute
   '/vocab': typeof VocabRoute
   '/words': typeof WordsRoute
 }
@@ -75,7 +68,6 @@ export interface FileRoutesByTo {
   '/levels': typeof LevelsRoute
   '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
-  '/pronounce': typeof PronounceRoute
   '/vocab': typeof VocabRoute
   '/words': typeof WordsRoute
 }
@@ -86,7 +78,6 @@ export interface FileRoutesById {
   '/levels': typeof LevelsRoute
   '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
-  '/pronounce': typeof PronounceRoute
   '/vocab': typeof VocabRoute
   '/words': typeof WordsRoute
 }
@@ -98,7 +89,6 @@ export interface FileRouteTypes {
     | '/levels'
     | '/practice'
     | '/progress'
-    | '/pronounce'
     | '/vocab'
     | '/words'
   fileRoutesByTo: FileRoutesByTo
@@ -108,7 +98,6 @@ export interface FileRouteTypes {
     | '/levels'
     | '/practice'
     | '/progress'
-    | '/pronounce'
     | '/vocab'
     | '/words'
   id:
@@ -118,7 +107,6 @@ export interface FileRouteTypes {
     | '/levels'
     | '/practice'
     | '/progress'
-    | '/pronounce'
     | '/vocab'
     | '/words'
   fileRoutesById: FileRoutesById
@@ -129,7 +117,6 @@ export interface RootRouteChildren {
   LevelsRoute: typeof LevelsRoute
   PracticeRoute: typeof PracticeRoute
   ProgressRoute: typeof ProgressRoute
-  PronounceRoute: typeof PronounceRoute
   VocabRoute: typeof VocabRoute
   WordsRoute: typeof WordsRoute
 }
@@ -148,13 +135,6 @@ declare module '@tanstack/react-router' {
       path: '/vocab'
       fullPath: '/vocab'
       preLoaderRoute: typeof VocabRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pronounce': {
-      id: '/pronounce'
-      path: '/pronounce'
-      fullPath: '/pronounce'
-      preLoaderRoute: typeof PronounceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/progress': {
@@ -201,7 +181,6 @@ const rootRouteChildren: RootRouteChildren = {
   LevelsRoute: LevelsRoute,
   PracticeRoute: PracticeRoute,
   ProgressRoute: ProgressRoute,
-  PronounceRoute: PronounceRoute,
   VocabRoute: VocabRoute,
   WordsRoute: WordsRoute,
 }
