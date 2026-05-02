@@ -275,7 +275,7 @@ function Pronounce() {
               )}
             </button>
             <p className="mt-3 text-sm font-medium text-muted-foreground">
-              {listening ? "Listening… speak now" : result ? "Got it!" : "Tap to record"}
+              {listening ? "Listening… you have 5s" : result ? "Got it!" : "Tap to record (5s)"}
             </p>
           </div>
 
