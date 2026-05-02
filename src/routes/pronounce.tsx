@@ -55,6 +55,8 @@ function Pronounce() {
   const [done, setDone] = useState(false);
   const recRef = useRef<{ stop: () => void } | null>(null);
   const startRef = useRef(Date.now());
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const gotResultRef = useRef(false);
 
   const word: Word | undefined = queue[idx];
   const sttSupported = isRecognitionSupported();
@@ -79,11 +81,12 @@ function Pronounce() {
     if (!word || listening) return;
     setError(null);
     setResult(null);
+    gotResultRef.current = false;
     stopSpeaking();
     const handle = startSpanishRecognition({
       onResult: (alts) => {
+        gotResultRef.current = true;
         const m = bestMatch(alts, word.es);
-        // Even if onResult was empty, still compute on transcript[0]
         const score = m.score || similarity(alts[0]?.transcript ?? "", word.es);
         const verdict: Result["verdict"] = score >= 0.8 ? "great" : score >= 0.55 ? "good" : "off";
         const r: Result = { score, transcript: m.transcript || alts[0]?.transcript || "", verdict };
@@ -94,24 +97,47 @@ function Pronounce() {
         setScore((sc) => ({ correct: sc.correct + (correct ? 1 : 0), total: sc.total + 1 }));
       },
       onError: (err) => {
-        if (err === "no-speech") setError("I didn't hear anything — try again 🎤");
-        else if (err === "not-allowed") setError("Microphone access blocked. Allow it in your browser settings.");
+        if (err === "no-speech") {
+          // Treat as wrong: 0 score
+          const r: Result = { score: 0, transcript: "", verdict: "off" };
+          setResult(r);
+          const ms = Date.now() - startRef.current;
+          recordAnswer(word.id, false, "type", ms);
+          setScore((sc) => ({ correct: sc.correct, total: sc.total + 1 }));
+          gotResultRef.current = true;
+        } else if (err === "not-allowed") setError("Microphone access blocked. Allow it in your browser settings.");
         else if (err === "not-supported") setError("Voice practice isn't supported in this browser.");
         else setError("Mic error: " + err);
         setListening(false);
+        if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
       },
       onEnd: () => {
         setListening(false);
         recRef.current = null;
+        if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
+        // If recognition ended with no result, score 0
+        if (!gotResultRef.current && word) {
+          const r: Result = { score: 0, transcript: "", verdict: "off" };
+          setResult(r);
+          const ms = Date.now() - startRef.current;
+          recordAnswer(word.id, false, "type", ms);
+          setScore((sc) => ({ correct: sc.correct, total: sc.total + 1 }));
+          gotResultRef.current = true;
+        }
       },
     });
     if (handle) {
       recRef.current = handle;
       setListening(true);
+      // Auto-stop after 5 seconds
+      timeoutRef.current = setTimeout(() => {
+        recRef.current?.stop();
+      }, 5000);
     }
   }
 
   function stopListening() {
+    if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
     recRef.current?.stop();
     recRef.current = null;
     setListening(false);
@@ -249,7 +275,7 @@ function Pronounce() {
               )}
             </button>
             <p className="mt-3 text-sm font-medium text-muted-foreground">
-              {listening ? "Listening… speak now" : result ? "Got it!" : "Tap to record"}
+              {listening ? "Listening… you have 5s" : result ? "Got it!" : "Tap to record (5s)"}
             </p>
           </div>
 
