@@ -161,24 +161,15 @@ function LevelsPage() {
               )}
 
               {/* Practice all */}
-              {unlocked && (
+              {unlocked && lvl.categories.length > 1 && (
                 <div className="mt-5 flex flex-wrap justify-end gap-2">
                   <Link
-                    to="/pronounce"
+                    to="/practice"
                     search={{ level: lvl.id }}
-                    className="rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-secondary-foreground shadow-soft transition hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground"
+                    className="rounded-full bg-card px-5 py-2 text-sm font-semibold shadow-soft transition hover:-translate-y-0.5"
                   >
-                    🎤 Voice practice →
+                    Mixed practice (all groups) →
                   </Link>
-                  {lvl.categories.length > 1 && (
-                    <Link
-                      to="/practice"
-                      search={{ level: lvl.id }}
-                      className="rounded-full bg-card px-5 py-2 text-sm font-semibold shadow-soft transition hover:-translate-y-0.5"
-                    >
-                      Mixed practice (all groups) →
-                    </Link>
-                  )}
                 </div>
               )}
             </motion.section>
