@@ -6,9 +6,8 @@ import { pickSpanishVoice, warmSpanishVoices } from "@/lib/speak";
 function speakGreeting(name: string, returning: boolean) {
   if (typeof window === "undefined" || !("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
   const display = name.charAt(0).toUpperCase() + name.slice(1);
-  const text = returning
-    ? `¡Hola, ${display}! Qué gusto verte otra vez, corazón. ¿Te apetece un poquito de español picante?`
-    : `¡Hola, ${display}! ¿Cómo estás, corazón? ¿Te apetece un poquito de español picante?`;
+  const text = `¡Hola, ${display}! ¿Cómo estás?`;
+  void returning;
   try {
     const speakNow = () => {
       window.speechSynthesis.cancel();
