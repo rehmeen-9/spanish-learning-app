@@ -187,6 +187,89 @@ export const WORDS: Word[] = [
   { id: "ti13", es: "siempre", en: "always", category: "time", difficulty: 2 },
   { id: "ti14", es: "nunca", en: "never", category: "time", difficulty: 2 },
   { id: "ti15", es: "ahora", en: "now", category: "time", difficulty: 1 },
+
+  // greetings extra
+  { id: "g17", es: "encantado", en: "pleased to meet", category: "greetings", difficulty: 3 },
+  { id: "g18", es: "salud", en: "cheers/bless you", category: "greetings", difficulty: 2 },
+  { id: "g19", es: "felicidades", en: "congratulations", category: "greetings", difficulty: 3 },
+  { id: "g20", es: "buen viaje", en: "have a good trip", category: "greetings", difficulty: 2 },
+  { id: "g21", es: "cuídate", en: "take care", category: "greetings", difficulty: 2 },
+  { id: "g22", es: "nos vemos", en: "see you", category: "greetings", difficulty: 2 },
+
+  // food extra
+  { id: "f23", es: "desayuno", en: "breakfast", category: "food", difficulty: 2 },
+  { id: "f24", es: "almuerzo", en: "lunch", category: "food", difficulty: 2 },
+  { id: "f25", es: "vino", en: "wine", category: "food", difficulty: 1 },
+  { id: "f26", es: "cerveza", en: "beer", category: "food", difficulty: 2 },
+  { id: "f27", es: "jugo", en: "juice", category: "food", difficulty: 1 },
+  { id: "f28", es: "té", en: "tea", category: "food", difficulty: 1 },
+  { id: "f29", es: "ensalada", en: "salad", category: "food", difficulty: 2 },
+  { id: "f30", es: "postre", en: "dessert", category: "food", difficulty: 2 },
+  { id: "f31", es: "pastel", en: "cake", category: "food", difficulty: 2 },
+  { id: "f32", es: "galleta", en: "cookie", category: "food", difficulty: 2 },
+
+  // travel extra
+  { id: "t19", es: "vuelo", en: "flight", category: "travel", difficulty: 2 },
+  { id: "t20", es: "equipaje", en: "luggage", category: "travel", difficulty: 3 },
+  { id: "t21", es: "habitación", en: "room", category: "travel", difficulty: 3 },
+  { id: "t22", es: "reserva", en: "reservation", category: "travel", difficulty: 2 },
+  { id: "t23", es: "turista", en: "tourist", category: "travel", difficulty: 2 },
+  { id: "t24", es: "guía", en: "guide", category: "travel", difficulty: 2 },
+  { id: "t25", es: "frontera", en: "border", category: "travel", difficulty: 3 },
+  { id: "t26", es: "embajada", en: "embassy", category: "travel", difficulty: 3 },
+
+  // family extra
+  { id: "fa17", es: "prima", en: "cousin (f)", category: "family", difficulty: 2 },
+  { id: "fa18", es: "sobrino", en: "nephew", category: "family", difficulty: 3 },
+  { id: "fa19", es: "sobrina", en: "niece", category: "family", difficulty: 3 },
+  { id: "fa20", es: "nieto", en: "grandson", category: "family", difficulty: 3 },
+  { id: "fa21", es: "nieta", en: "granddaughter", category: "family", difficulty: 3 },
+  { id: "fa22", es: "padres", en: "parents", category: "family", difficulty: 1 },
+  { id: "fa23", es: "familia", en: "family", category: "family", difficulty: 1 },
+  { id: "fa24", es: "novio", en: "boyfriend", category: "family", difficulty: 2 },
+
+  // numbers extra
+  { id: "n16", es: "once", en: "eleven", category: "numbers", difficulty: 2 },
+  { id: "n17", es: "doce", en: "twelve", category: "numbers", difficulty: 2 },
+  { id: "n18", es: "trece", en: "thirteen", category: "numbers", difficulty: 2 },
+  { id: "n19", es: "quince", en: "fifteen", category: "numbers", difficulty: 2 },
+  { id: "n20", es: "cuarenta", en: "forty", category: "numbers", difficulty: 2 },
+  { id: "n21", es: "sesenta", en: "sixty", category: "numbers", difficulty: 2 },
+  { id: "n22", es: "setenta", en: "seventy", category: "numbers", difficulty: 2 },
+  { id: "n23", es: "ochenta", en: "eighty", category: "numbers", difficulty: 2 },
+  { id: "n24", es: "noventa", en: "ninety", category: "numbers", difficulty: 2 },
+  { id: "n25", es: "millón", en: "million", category: "numbers", difficulty: 3 },
+
+  // verbs extra
+  { id: "v21", es: "vender", en: "to sell", category: "verbs", difficulty: 2 },
+  { id: "v22", es: "abrir", en: "to open", category: "verbs", difficulty: 2 },
+  { id: "v23", es: "cerrar", en: "to close", category: "verbs", difficulty: 2 },
+  { id: "v24", es: "empezar", en: "to begin", category: "verbs", difficulty: 3 },
+  { id: "v25", es: "terminar", en: "to finish", category: "verbs", difficulty: 3 },
+  { id: "v26", es: "pensar", en: "to think", category: "verbs", difficulty: 2 },
+  { id: "v27", es: "decir", en: "to say", category: "verbs", difficulty: 2 },
+  { id: "v28", es: "venir", en: "to come", category: "verbs", difficulty: 2 },
+  { id: "v29", es: "llegar", en: "to arrive", category: "verbs", difficulty: 2 },
+  { id: "v30", es: "salir", en: "to leave", category: "verbs", difficulty: 2 },
+
+  // colors extra
+  { id: "c13", es: "plateado", en: "silver", category: "colors", difficulty: 3 },
+  { id: "c14", es: "celeste", en: "sky blue", category: "colors", difficulty: 2 },
+  { id: "c15", es: "violeta", en: "violet", category: "colors", difficulty: 2 },
+  { id: "c16", es: "turquesa", en: "turquoise", category: "colors", difficulty: 3 },
+  { id: "c17", es: "beige", en: "beige", category: "colors", difficulty: 2 },
+
+  // time extra
+  { id: "ti16", es: "segundo", en: "second", category: "time", difficulty: 2 },
+  { id: "ti17", es: "lunes", en: "Monday", category: "time", difficulty: 2 },
+  { id: "ti18", es: "martes", en: "Tuesday", category: "time", difficulty: 2 },
+  { id: "ti19", es: "miércoles", en: "Wednesday", category: "time", difficulty: 3 },
+  { id: "ti20", es: "jueves", en: "Thursday", category: "time", difficulty: 2 },
+  { id: "ti21", es: "viernes", en: "Friday", category: "time", difficulty: 2 },
+  { id: "ti22", es: "sábado", en: "Saturday", category: "time", difficulty: 2 },
+  { id: "ti23", es: "domingo", en: "Sunday", category: "time", difficulty: 2 },
+  { id: "ti24", es: "fin de semana", en: "weekend", category: "time", difficulty: 3 },
+  { id: "ti25", es: "mediodía", en: "noon", category: "time", difficulty: 3 },
 ];
 
 export const LEVELS = [
